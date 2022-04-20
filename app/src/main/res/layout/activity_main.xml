@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
     />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:id="@+id/signin"
             android:layout_below="@+id/forgotpass"
