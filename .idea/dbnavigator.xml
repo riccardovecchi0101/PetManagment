@@ -17,7 +17,7 @@
       <scope value="GLOBAL" />
       <destination value="FILE" />
       <format value="EXCEL" />
-      <charset value="windows-1252" />
+      <charset value="UTF-8" />
     </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -28,19 +28,14 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="c6882dc0-9a3c-46cb-8a5f-ac7ac9ba3090">
-      <console name="Connection" type="STANDARD" schema="petmanagment" session="Main"><![CDATA[use petmanagment
-
-select * from credenziali]]></console>
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
     <connection id="8969761a-aaea-4c55-acdd-ff078d68709e">
-      <console name="Connection 1" type="STANDARD" schema="petmanagment" session="Main"><![CDATA[use petmanagment
-select * from  credenziali]]></console>
+      <console name="Connection 1" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="c6882dc0-9a3c-46cb-8a5f-ac7ac9ba3090" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="c6882dc0-9a3c-46cb-8a5f-ac7ac9ba3090" />
