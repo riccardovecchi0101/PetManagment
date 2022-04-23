@@ -3,7 +3,6 @@ package com.example.petmanagment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 
@@ -17,8 +16,10 @@ public class MainActivity extends AppCompatActivity {
         TextView username = (TextView) findViewById(R.id.username);
         TextView password = (TextView) findViewById(R.id.password);
 
-        MaterialButton sigBtn = (MaterialButton) findViewById(R.id.signin);
-        MaterialButton loginbtn = (MaterialButton) findViewById(R.id.registerbtn);
+        MaterialButton signinBtn = (MaterialButton) findViewById(R.id.signinBtn);
+        MaterialButton loginBtn = (MaterialButton) findViewById(R.id.loginBtn);
+        MaterialButton forgotpasswordBtn = (MaterialButton) findViewById(R.id.forgotpasswordBtn);
+
 
         /*loginbtn.setOnClickListener(v -> {
             if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
@@ -28,9 +29,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        sigBtn.setOnClickListener(view -> {
-            Intent sin = new Intent(getApplicationContext(), RegistrationActivity.class);
-            startActivity(sin);
+        signinBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
+            startActivity(intent);
+
+        });
+        forgotpasswordBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), ForgotPWActivity.class);
+            startActivity(intent);
 
         });
 
