@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pet Managment</string>
+    <string name="password">Password</string>
 </resources>
