@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,6 +60,13 @@ public class RegistrationActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(em, pw)
                  .addOnCompleteListener(task -> {
                      if(task.isSuccessful()){
+                         FirebaseUser userauth = mAuth.getCurrentUser();
+                         userauth.sendEmailVerification().addOnSuccessListener(unused -> {
+                             Toast.makeText(RegistrationActivity.this, "Verification email Sent", Toast.LENGTH_LONG).show();
+                         }).addOnFailureListener(e -> {
+                             Toast.makeText(RegistrationActivity.this, "Verification email not Sent", Toast.LENGTH_LONG).show();
+                         });
+
                          User user = new User(em, pw);
                          FirebaseDatabase.getInstance().getReference("users")
                                  .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
