@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "904387070612",
-    "project_id": "petmanagment",
-    "storage_bucket": "petmanagment.appspot.com"
+    "project_number": "4644610521",
+    "project_id": "petmanagme",
+    "storage_bucket": "petmanagme.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:904387070612:android:607f81c2ba9baa2bd18281",
+        "mobilesdk_app_id": "1:4644610521:android:3425bf0c9fb10afde479c8",
         "android_client_info": {
           "package_name": "com.example.petmanagment"
         }
       },
       "oauth_client": [
         {
-          "client_id": "904387070612-8t676nakah3qt3cbeunn48pl6esckd66.apps.googleusercontent.com",
+          "client_id": "4644610521-mvo42s3v6mcrqiso2l1rh28js110rmq5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBRA0iBJ9-9eO96pl5ZEXP1LOkZP140PSA"
+          "current_key": "AIzaSyB07yDe3UFujYQjII2R9lSh5lh20eYZr2w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "904387070612-8t676nakah3qt3cbeunn48pl6esckd66.apps.googleusercontent.com",
+              "client_id": "4644610521-mvo42s3v6mcrqiso2l1rh28js110rmq5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
