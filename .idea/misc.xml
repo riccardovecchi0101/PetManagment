@@ -20,11 +20,15 @@
         <entry key="app/src/main/res/drawable/key_icon.xml" value="0.19739583333333333" />
         <entry key="app/src/main/res/drawable/lock_icon.xml" value="0.19739583333333333" />
         <entry key="app/src/main/res/drawable/progressbar.xml" value="0.1535" />
+        <entry key="app/src/main/res/drawable/rounded_corner.xml" value="0.225" />
+        <entry key="app/src/main/res/drawable/rounded_corner_button.xml" value="0.225" />
+        <entry key="app/src/main/res/drawable/rounded_corner_textview.xml" value="0.225" />
+        <entry key="app/src/main/res/drawable/signin_user_icon.xml" value="0.26" />
         <entry key="app/src/main/res/drawable/user_icon.xml" value="0.2828125" />
         <entry key="app/src/main/res/font/quicksand_bold.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.380947340056052" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_registration.xml" value="0.26666666666666666" />
+        <entry key="app/src/main/res/layout/activity_registration.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2828125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2828125" />
       </map>

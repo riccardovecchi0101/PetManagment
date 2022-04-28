@@ -28,7 +28,6 @@ import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private int CurrentProgress = 0;
     private ProgressBar progressBar;
 
     @Override
@@ -70,7 +69,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(task1 -> {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RegistrationActivity.this, "User has been registered succesfuly", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RegistrationActivity.this, "User has been registered succesfully", Toast.LENGTH_LONG).show();
                                     progressBar.setVisibility(View.VISIBLE);
                                     Intent returnback = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(returnback);
