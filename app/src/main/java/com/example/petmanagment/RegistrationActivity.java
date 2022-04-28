@@ -28,7 +28,6 @@ import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private int CurrentProgress = 0;
     private ProgressBar progressBar;
 
     @Override
