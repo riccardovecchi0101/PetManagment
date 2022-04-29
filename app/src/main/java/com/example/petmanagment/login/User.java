@@ -1,4 +1,4 @@
-package com.example.petmanagment;
+package com.example.petmanagment.login;
 
 public class User {
     public String email, password;

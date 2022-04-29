@@ -10,13 +10,13 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.PetManagment">
         <activity
-                android:name=".ForgotPWActivity"
+                android:name=".login.ForgotPWActivity"
                 android:exported="true"/>
         <activity
-                android:name=".RegistrationActivity"
+                android:name=".login.RegistrationActivity"
                 android:exported="true"/>
         <activity
-                android:name=".MainActivity"
+                android:name=".login.MainActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
