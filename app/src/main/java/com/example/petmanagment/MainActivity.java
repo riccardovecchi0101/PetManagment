@@ -2,17 +2,26 @@ package com.example.petmanagment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-
+    private FirebaseAuth lAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        lAuth = FirebaseAuth.getInstance();
         TextView username = (TextView) findViewById(R.id.username);
         TextView password = (TextView) findViewById(R.id.password);
 
@@ -21,13 +30,33 @@ public class MainActivity extends AppCompatActivity {
         MaterialButton forgotpasswordBtn = (MaterialButton) findViewById(R.id.forgotpasswordBtn);
 
 
-        /*loginbtn.setOnClickListener(v -> {
-            if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
-                Toast.makeText(MainActivity.this, "LOGIN SUCCESSFULL", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
+        loginBtn.setOnClickListener(v -> {
+            String email = username.getText().toString();
+            String pw = password.getText().toString();
+            if (email.isEmpty()) {
+                username.setError("email is required");
+                username.requestFocus();
+                return;
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                username.setError("Insert a valid email");
+                username.requestFocus();
+                return;
             }
-        });*/
+            if (pw.isEmpty()) {
+                password.setError("password is required");
+                password.requestFocus();
+                return;
+            }
+            lAuth.signInWithEmailAndPassword(email,pw).addOnCompleteListener(task -> {
+                if(task.isSuccessful() && lAuth.getCurrentUser().isEmailVerified()){
+                    Toast.makeText(MainActivity.this, "login succesful", Toast.LENGTH_LONG).show();
+                }else
+                {
+                    Toast.makeText(MainActivity.this, "login failed, verify your account credentials or verify your email", Toast.LENGTH_LONG).show();
+                }
+            });
+
+        });
 
         signinBtn.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
@@ -41,4 +70,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }

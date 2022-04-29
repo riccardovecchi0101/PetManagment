@@ -71,8 +71,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegistrationActivity.this, "User has been registered succesfully", Toast.LENGTH_LONG).show();
                                     progressBar.setVisibility(View.VISIBLE);
-                                    Intent returnback = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(returnback);
+                                    mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(task2 -> {
+                                        Intent returnback = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(returnback);
+                                    });
                                 } else {
                                     Toast.makeText(RegistrationActivity.this, "Failed to register the user", Toast.LENGTH_LONG).show();
                                     progressBar.setVisibility(View.GONE);
