@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.petmanagment.HomeActivity;
 import com.example.petmanagment.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         lAuth = FirebaseAuth.getInstance();
         TextView username = (TextView) findViewById(R.id.username);
         TextView password = (TextView) findViewById(R.id.password);
+
 
         MaterialButton signinBtn = (MaterialButton) findViewById(R.id.signinBtn);
         MaterialButton loginBtn = (MaterialButton) findViewById(R.id.loginBtn);
@@ -66,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        loginBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+        });
     }
 
 }
