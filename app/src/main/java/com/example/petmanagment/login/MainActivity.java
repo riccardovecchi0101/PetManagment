@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         MaterialButton loginBtn = (MaterialButton) findViewById(R.id.loginBtn);
         MaterialButton forgotpasswordBtn = (MaterialButton) findViewById(R.id.forgotpasswordBtn);
 
-
         loginBtn.setOnClickListener(v -> {
             String email = username.getText().toString();
             String pw = password.getText().toString();
