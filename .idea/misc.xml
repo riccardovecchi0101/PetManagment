@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/drawable-v24/dog_icon.xml" value="0.19739583333333333" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/background2.xml" value="0.17135416666666667" />
+        <entry key="app/src/main/res/drawable/camera_icon_white.xml" value="0.2245" />
         <entry key="app/src/main/res/drawable/home_icon.xml" value="0.2405" />
         <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_assignment_ind_24.xml" value="0.3260416666666667" />
@@ -43,7 +44,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.21822916666666667" />
-        <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.5" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
         <entry key="app/src/main/res/menu/home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2828125" />
@@ -52,7 +53,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
