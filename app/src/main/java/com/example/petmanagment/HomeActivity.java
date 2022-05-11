@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.example.petmanagment.login.MainActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -14,6 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.petmanagment.databinding.ActivityHomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -46,7 +49,10 @@ public class HomeActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         TextView username = (TextView) findViewById(R.id.textView);
-        username.setText(findViewById(R.id.username));
+        Bundle extras = getIntent().getExtras();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) username.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        else
+            username.setText("none");
         return true;
     }
 

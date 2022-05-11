@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
             lAuth.signInWithEmailAndPassword(email,pw).addOnCompleteListener(task -> {
                 if(task.isSuccessful() && lAuth.getCurrentUser().isEmailVerified()){
                     Toast.makeText(MainActivity.this, "login succesful", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
                 }else
                 {
                     Toast.makeText(MainActivity.this, "login failed, verify your account credentials or verify your email", Toast.LENGTH_LONG).show();
@@ -66,11 +68,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), ForgotPWActivity.class);
             startActivity(intent);
 
-        });
-
-        loginBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
         });
     }
 
