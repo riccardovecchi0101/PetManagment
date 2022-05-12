@@ -48,8 +48,10 @@
         <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.18" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
         <entry key="app/src/main/res/menu/home.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher 2.xml" value="0.3605" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2828125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher2.xml" value="0.341" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round 2.xml" value="0.326" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2828125" />
       </map>
     </option>

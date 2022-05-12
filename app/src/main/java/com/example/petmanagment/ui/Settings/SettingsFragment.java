@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentSettingsBinding;
 
 public class SettingsFragment extends Fragment {
@@ -24,8 +25,8 @@ public class SettingsFragment extends Fragment {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //final TextView textView = binding.textSlideshow;
-        //slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView text_settings = (TextView) root.findViewById(R.id.text_settings);
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), text_settings::setText);
         return root;
     }
 

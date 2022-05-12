@@ -1,38 +1,36 @@
 package com.example.petmanagment;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Menu;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.petmanagment.databinding.ActivityHomeBinding;
-import com.example.petmanagment.login.PhotoCreator;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.core.content.FileProvider;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.petmanagment.databinding.ActivityHomeBinding;
+import com.example.petmanagment.login.MainActivity;
+import com.example.petmanagment.login.PhotoCreator;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.io.File;
-import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
+    /* drawerLayout e navigationView servono per rendere il pulsante di logout un semplice pulsante*/
+    private NavigationView navigationView;
     Bitmap puppet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,19 +45,34 @@ public class HomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_customers, R.id.nav_settings)
+                R.id.nav_home, R.id.nav_customers, R.id.nav_settings, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        /*codice per fare logout schiacciando il pulsante dal menu a tendina*/
+        findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_logout) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(HomeActivity.this, MainActivity.class));
+                Toast.makeText(HomeActivity.this, "logout successul", Toast.LENGTH_LONG).show();
+                return true;
+            }
+            return true;
+        });
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.home, menu);  //questa linea di codice mi fa apparire i tre puntini in alto a destra
         TextView username = (TextView) findViewById(R.id.mailView);
         ImageView profileImage = (ImageView) findViewById(R.id.ProfileIcon);
         //profileImage.setVisibility(View.INVISIBLE);
@@ -69,12 +82,12 @@ public class HomeActivity extends AppCompatActivity {
             profileImage.setImageBitmap(puppet);
 
         });
-        if(FirebaseAuth.getInstance().getCurrentUser() != null) username.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            username.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         else
             username.setText("none");
         return true;
     }
-
 
 
     @Override

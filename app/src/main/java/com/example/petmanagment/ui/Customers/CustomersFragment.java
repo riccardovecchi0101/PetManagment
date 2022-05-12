@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.petmanagment.R;
@@ -25,8 +26,8 @@ public class CustomersFragment extends Fragment {
         binding = FragmentCustomersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //TextView username = (TextView) findViewById(R.id.username);
-        //galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView text_customers = (TextView) root.findViewById(R.id.text_customers);
+        customersViewModel.getText().observe(getViewLifecycleOwner(), text_customers::setText);
         return root;
     }
 
