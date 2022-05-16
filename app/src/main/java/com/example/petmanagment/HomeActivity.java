@@ -20,6 +20,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.petmanagment.databinding.ActivityHomeBinding;
 import com.example.petmanagment.login.MainActivity;
 import com.example.petmanagment.login.PhotoCreator;
+import com.example.petmanagment.ui.Customers.CustomersFragment;
+import com.example.petmanagment.ui.Customers.CustomersViewModel;
+import com.example.petmanagment.ui.Settings.SettingsFragment;
+import com.example.petmanagment.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -27,8 +31,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
+
     /* drawerLayout e navigationView servono per rendere il pulsante di logout un semplice pulsante*/
     private NavigationView navigationView;
+    private DrawerLayout drawer;
     Bitmap puppet;
 
     @Override
@@ -40,12 +46,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
         setSupportActionBar(binding.appBarHome.toolbar);
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        drawer = binding.drawerLayout;
+        navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_customers, R.id.nav_settings, R.id.nav_logout)
+                R.id.nav_home, R.id.nav_customers, R.id.nav_settings)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
@@ -56,16 +62,30 @@ public class HomeActivity extends AppCompatActivity {
         /*codice per fare logout schiacciando il pulsante dal menu a tendina*/
         findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.nav_logout) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(HomeActivity.this, MainActivity.class));
-                Toast.makeText(HomeActivity.this, "logout successul", Toast.LENGTH_LONG).show();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_logout:
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(HomeActivity.this, MainActivity.class));
+                        Toast.makeText(HomeActivity.this, "logout successul", Toast.LENGTH_LONG).show();
+                        return true;
+
+                    case R.id.nav_customers:
+                        return true;
+
+                    case R.id.nav_home:
+                        return true;
+
+                    case R.id.nav_settings:
+                        startActivity(new Intent(HomeActivity.this, SettingsFragment.class));
+                        return true;
+
+                }
                 return true;
             }
-            return true;
         });
-
     }
 
 
