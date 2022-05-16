@@ -5,13 +5,18 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -65,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                drawer.closeDrawer(GravityCompat.START);
                 switch (item.getItemId()) {
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
@@ -73,13 +79,15 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.nav_customers:
+                        replaceFragment(new CustomersFragment());
                         return true;
 
                     case R.id.nav_home:
+                        replaceFragment(new HomeFragment());
                         return true;
 
                     case R.id.nav_settings:
-                        startActivity(new Intent(HomeActivity.this, SettingsFragment.class));
+                        replaceFragment(new SettingsFragment());
                         return true;
 
                 }
@@ -124,6 +132,14 @@ public class HomeActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             puppet = (Bitmap) extras.get("data");
         }
+    }
+
+    private void replaceFragment(Fragment fragment)
+    {
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.app_bar_home,fragment);
+        fragmentTransaction.commit();
     }
 
 }
