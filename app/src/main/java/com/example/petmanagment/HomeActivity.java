@@ -4,20 +4,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,11 +22,12 @@ import com.example.petmanagment.databinding.ActivityHomeBinding;
 import com.example.petmanagment.login.MainActivity;
 import com.example.petmanagment.login.PhotoCreator;
 import com.example.petmanagment.ui.Customers.CustomersFragment;
-import com.example.petmanagment.ui.Customers.CustomersViewModel;
 import com.example.petmanagment.ui.Settings.SettingsFragment;
 import com.example.petmanagment.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -66,34 +62,38 @@ public class HomeActivity extends AppCompatActivity {
 
 
         /*codice per fare logout schiacciando il pulsante dal menu a tendina*/
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                drawer.closeDrawer(GravityCompat.START);
-                switch (item.getItemId()) {
-                    case R.id.nav_logout:
-                        FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(HomeActivity.this, MainActivity.class));
-                        Toast.makeText(HomeActivity.this, "logout successul", Toast.LENGTH_LONG).show();
-                        return true;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            drawer.closeDrawer(GravityCompat.START);
+            switch (item.getItemId()) {
+                case R.id.nav_logout:
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(HomeActivity.this, MainActivity.class));
+                    Toast.makeText(HomeActivity.this, "logout successul", Toast.LENGTH_LONG).show();
+                    return true;
 
-                    case R.id.nav_customers:
-                        replaceFragment(CustomersFragment.class, fragmentManager);
-                        return true;
+                case R.id.nav_customers:
+                    replaceFragment(CustomersFragment.class, fragmentManager);
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Customers");
+                    return true;
 
-                    case R.id.nav_home:
-                        replaceFragment(HomeFragment.class, fragmentManager);
-                        return true;
+                case R.id.nav_home:
+                    replaceFragment(HomeFragment.class, fragmentManager);
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Home");
 
-                    case R.id.nav_settings:
-                        replaceFragment(SettingsFragment.class, fragmentManager);
-                        return true;
+                    return true;
 
-                }
-                return true;
+                case R.id.nav_settings:
+                    replaceFragment(SettingsFragment.class, fragmentManager);
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Settings");
+                    return true;
+
             }
+            return true;
         });
     }
 
@@ -135,8 +135,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void replaceFragment(Class fragment, FragmentManager manager)
-    {
+    private void replaceFragment(Class fragment, FragmentManager manager) {
         manager.beginTransaction()
                 .replace(R.id.nav_host_fragment_content_home, fragment, null)
                 .setReorderingAllowed(true)
