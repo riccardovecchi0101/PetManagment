@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.petmanagment.HomeActivity;
 import com.example.petmanagment.R;
@@ -22,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         lAuth = FirebaseAuth.getInstance();
         TextView username = (TextView) findViewById(R.id.username);
         TextView password = (TextView) findViewById(R.id.password);
-
 
         MaterialButton signinBtn = (MaterialButton) findViewById(R.id.signinBtn);
         MaterialButton loginBtn = (MaterialButton) findViewById(R.id.loginBtn);

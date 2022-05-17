@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +49,7 @@ public class HomeActivity extends AppCompatActivity {
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         setSupportActionBar(binding.appBarHome.toolbar);
         drawer = binding.drawerLayout;
@@ -79,15 +80,15 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.nav_customers:
-                        replaceFragment(new CustomersFragment());
+                        replaceFragment(CustomersFragment.class, fragmentManager);
                         return true;
 
                     case R.id.nav_home:
-                        replaceFragment(new HomeFragment());
+                        replaceFragment(HomeFragment.class, fragmentManager);
                         return true;
 
                     case R.id.nav_settings:
-                        replaceFragment(new SettingsFragment());
+                        replaceFragment(SettingsFragment.class, fragmentManager);
                         return true;
 
                 }
@@ -134,12 +135,13 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void replaceFragment(Fragment fragment)
+    private void replaceFragment(Class fragment, FragmentManager manager)
     {
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.app_bar_home,fragment);
-        fragmentTransaction.commit();
+        manager.beginTransaction()
+                .replace(R.id.nav_host_fragment_content_home, fragment, null)
+                .setReorderingAllowed(true)
+                .addToBackStack("name") // name can be nul
+                .commit();
     }
 
 }
