@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.petmanagment.R;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
+//creo un adapter per la recycle view
 
     String[] list;
 
-    public ListAdapter(String[] list){
-        this.list=list;
+    public ListAdapter(String[] list) {
+        this.list = list;
     }
 
     @NonNull
@@ -33,7 +34,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public int getItemCount() {
         return list.length;
     }
-    //creo un adapter per la recycle view
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
