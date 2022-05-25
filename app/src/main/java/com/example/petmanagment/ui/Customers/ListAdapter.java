@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petmanagment.R;
 
+import java.util.ArrayList;
+
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
 //creo un adapter per la recycle view
 
-    String[] list;
+    ArrayList<String> list=new ArrayList<>();
 
-    public ListAdapter(String[] list) {
+    public ListAdapter(ArrayList<String> list) {
         this.list = list;
     }
 
@@ -27,12 +29,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-       holder.textView.setText(list[position]);
+       holder.textView.setText(list.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return list.length;
+        return list.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
