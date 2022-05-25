@@ -4,31 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="@android:color/white"
     tools:context=".ui.Customers.CustomersFragment">
 
-    <ImageButton
-        android:id="@+id/imageButton2"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/add_button"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/add_button"
+        android:elevation="1dp"
+        android:scrollbarTrackHorizontal="@drawable/add_button2"
+        android:scrollbarTrackVertical="@drawable/add_button2"
+        android:src="@drawable/add_button2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="0.976"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="410dp"
         android:layout_height="700dp"
+        android:background="@color/fui_transparent"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_customer_editText"
         app:layout_constraintVertical_bias="0.0" />
