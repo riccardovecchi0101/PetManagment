@@ -1,9 +1,14 @@
 package com.example.petmanagment.ui.Customers;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +22,8 @@ import com.example.petmanagment.databinding.FragmentCustomersBinding;
 
 public class CustomersFragment extends Fragment {
 
-    String[] customers = {"cliente1", "cliente2", "cliente3", "cliente4", "cliente5", "cliente6", "cliente7", "cliente8", "cliente9", "cliente10"};
+    String[] customers = {"gianni", "luca", "frovio", "riccardomerda", "succo", "fruttolo", "cliente7", "cliente8", "cliente9", "cliente10"};
+
 
 
     private FragmentCustomersBinding binding;
@@ -29,10 +35,35 @@ public class CustomersFragment extends Fragment {
 
         binding = FragmentCustomersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        EditText searchCustomer=(EditText)root.findViewById(R.id.search_customer_editText);
         final RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(new ListAdapter(customers));
+
+        final Handler handler = new Handler();
+        final Runnable runnable= () -> {
+            recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+            recyclerView.setAdapter(new ListAdapter(customers));
+        };
+
+
+        searchCustomer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler.postDelayed(runnable,500);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                handler.removeCallbacksAndMessages(runnable);
+                //handler.removeCallbacks(runnable);
+            }
+        });
+
+
 
         return root;
     }

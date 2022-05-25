@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:background="#00ffffff"
         android:fontFamily="@font/quicksand_bold"
-        android:text="Sign in"
+        android:text="Sign up"
         android:textAllCaps="false"
         android:textColor="@color/orange"
         android:textSize="17sp"

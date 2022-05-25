@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -101,7 +102,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);  //questa linea di codice mi fa apparire i tre puntini in alto a destra
         TextView username = (TextView) findViewById(R.id.mailView);
         ImageView profileImage = (ImageView) findViewById(R.id.ProfileIcon);
         //profileImage.setVisibility(View.INVISIBLE);
@@ -139,7 +139,7 @@ public class HomeActivity extends AppCompatActivity {
         manager.beginTransaction()
                 .replace(R.id.nav_host_fragment_content_home, fragment, null)
                 .setReorderingAllowed(true)
-                .addToBackStack("name") // name can be nul
+                .addToBackStack("name") // name can be null
                 .commit();
     }
 
