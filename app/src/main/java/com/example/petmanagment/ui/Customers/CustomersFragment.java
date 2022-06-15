@@ -55,6 +55,7 @@ public class CustomersFragment extends Fragment {
         View root = binding.getRoot();
         EditText searchCustomer = (EditText) root.findViewById(R.id.search_customer_editText);
         final RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+       // private Button addusr = (Button) root.findViewById(R.id.cbutton);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new ListAdapter(customers));
         final Handler handler = new Handler();
