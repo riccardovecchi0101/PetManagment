@@ -1,7 +1,7 @@
 package com.example.petmanagment.ui.Customers;
 
 import android.app.AlertDialog;
-import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -13,23 +13,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.petmanagment.HomeActivity;
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentCustomersBinding;
 import com.example.petmanagment.login.Customer;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
 
 public class CustomersFragment extends Fragment {
 
@@ -39,6 +41,10 @@ public class CustomersFragment extends Fragment {
     private AlertDialog dialog;
     private EditText firstname, lastname, address, mobile, email;
     private Button cancel, confirm;
+    ArrayList<String> customers = new ArrayList<>();
+    ArrayList<String> flag = new ArrayList<>();
+    RecyclerView recyclerView;
+
 
     private DatabaseReference dataref;
 
@@ -46,9 +52,6 @@ public class CustomersFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         CustomersViewModel customersViewModel =
                 new ViewModelProvider(this).get(CustomersViewModel.class);
-
-        ArrayList<String> customers = new ArrayList<>();
-        ArrayList<String> flag = new ArrayList<>();
 
         customers.add("ciao");
         customers.add("luca");
@@ -62,9 +65,8 @@ public class CustomersFragment extends Fragment {
         dataref = FirebaseDatabase.getInstance().getReference();
 
         EditText searchCustomer = (EditText) root.findViewById(R.id.search_customer_editText);
-        final RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView = root.findViewById(R.id.recyclerView);
         final ImageButton add_customer = root.findViewById(R.id.button2);
-
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -80,17 +82,14 @@ public class CustomersFragment extends Fragment {
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
                 recyclerView.setAdapter(new ListAdapter(flag));
-            }
-            else {
+            } else {
                 recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
                 recyclerView.setAdapter(new ListAdapter(customers));
             }
 
         };
 
-        add_customer.setOnClickListener(view -> {
-            addUser();
-        });
+        add_customer.setOnClickListener(view -> addUser());
 
 
         searchCustomer.addTextChangedListener(new TextWatcher() {
@@ -110,14 +109,15 @@ public class CustomersFragment extends Fragment {
             }
         });
 
-
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         return root;
     }
 
-    public void addUser(){
+    public void addUser() {
 
         dialogBuilder = new AlertDialog.Builder(getContext());
-        final View popup = getLayoutInflater().inflate(R.layout.popwindow,null);
+        final View popup = getLayoutInflater().inflate(R.layout.popwindow, null);
         firstname = (EditText) popup.findViewById(R.id.firstname);
         lastname = (EditText) popup.findViewById(R.id.lastname);
         mobile = (EditText) popup.findViewById(R.id.phone);
@@ -131,18 +131,65 @@ public class CustomersFragment extends Fragment {
 
         confirm.setOnClickListener(view -> {
             Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), email.getText().toString(), mobile.getText().toString());
-          //  writeNewUser(c);
+            //  writeNewUser(c);
             dialog.dismiss();
 
         });
     }
+
+    String deletedCustomer = null;
+
+    //ItemTouchHelper serve per implementare l'eliminazione dalla lista scorrendo verso sinistra
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+
+        //onMove probabilmente non serve
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+            if (direction == ItemTouchHelper.LEFT) {
+                deletedCustomer = customers.get(position);
+
+                customers.remove(position);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                //la snackbar serve per tornare indietro in caso di errore nella cancellazione
+                Snackbar.make(recyclerView, "Customer " + deletedCustomer + " deleted", Snackbar.LENGTH_LONG).setAction("Undo", view -> {
+                            customers.add(position, deletedCustomer);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                        }).setActionTextColor(getResources().getColor(R.color.orange))
+                        .setTextColor(getResources().getColor(R.color.black))
+                        .setBackgroundTint(getResources().getColor(R.color.white))
+                        .show();
+            }
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(getContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.delete_icon)
+                    .create()
+                    .decorate();
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
-    public void writeNewUser(Customer customer){
+    public void writeNewUser(Customer customer) {
 
         dataref.child("users").setValue(customer);
     }
