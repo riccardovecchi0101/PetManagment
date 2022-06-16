@@ -1,6 +1,7 @@
 package com.example.petmanagment.ui.Customers;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 
 import androidx.annotation.NonNull;
@@ -18,10 +20,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.petmanagment.HomeActivity;
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentCustomersBinding;
 import com.example.petmanagment.login.Customer;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -29,12 +33,14 @@ import java.util.regex.Pattern;
 
 public class CustomersFragment extends Fragment {
 
+
+    private FragmentCustomersBinding binding;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private EditText firstname, lastname, address, mobile, email;
     private Button cancel, confirm;
+
     private DatabaseReference dataref;
-    private FragmentCustomersBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,9 +59,14 @@ public class CustomersFragment extends Fragment {
 
         binding = FragmentCustomersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        dataref = FirebaseDatabase.getInstance().getReference();
+
         EditText searchCustomer = (EditText) root.findViewById(R.id.search_customer_editText);
         final RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-       // private Button addusr = (Button) root.findViewById(R.id.cbutton);
+        final ImageButton add_customer = root.findViewById(R.id.button2);
+
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new ListAdapter(customers));
         final Handler handler = new Handler();
@@ -76,6 +87,10 @@ public class CustomersFragment extends Fragment {
             }
 
         };
+
+        add_customer.setOnClickListener(view -> {
+            addUser();
+        });
 
 
         searchCustomer.addTextChangedListener(new TextWatcher() {
@@ -116,15 +131,19 @@ public class CustomersFragment extends Fragment {
 
         confirm.setOnClickListener(view -> {
             Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), email.getText().toString(), mobile.getText().toString());
-           // writeNewUser(c);
+          //  writeNewUser(c);
             dialog.dismiss();
 
         });
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void writeNewUser(Customer customer){
+
+        dataref.child("users").setValue(customer);
     }
 }
