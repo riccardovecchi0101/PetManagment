@@ -186,7 +186,8 @@ public class CustomersFragment extends Fragment {
             }
             if(del)
                 deleteCustomers(customers.get(position));
-            del = true;
+            else
+                 del = true;
         }
 
         @Override
