@@ -166,6 +166,7 @@ public class CustomersFragment extends Fragment {
 
             int position = viewHolder.getAdapterPosition();
             if (direction == ItemTouchHelper.LEFT) {
+                deleteCustomers(customers.get(position));
                 deletedCustomer = customers.get(position);
 
                 customers.remove(position);
@@ -225,5 +226,9 @@ public class CustomersFragment extends Fragment {
                         listAdapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    public void deleteCustomers(String customerName){
+        db.collection(user.getEmail().toString()).document(customerName).delete();
     }
 }
