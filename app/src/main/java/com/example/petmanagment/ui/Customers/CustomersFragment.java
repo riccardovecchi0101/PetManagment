@@ -58,6 +58,7 @@ public class CustomersFragment extends Fragment {
     private DatabaseReference dataref;
     FirebaseUser user;
     FirebaseFirestore db;
+    ListAdapter listAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -74,10 +75,11 @@ public class CustomersFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerView);
         final ImageButton add_customer = root.findViewById(R.id.button2);
 
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(new ListAdapter(customers));
         getCustomers(customers);
+        listAdapter = new ListAdapter(customers);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setAdapter(listAdapter);
+
 
         final Handler handler = new Handler();
         final Runnable runnable = () -> {
@@ -93,7 +95,7 @@ public class CustomersFragment extends Fragment {
                 recyclerView.setAdapter(new ListAdapter(flag));
             } else {
                 recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-                recyclerView.setAdapter(new ListAdapter(customers));
+                recyclerView.setAdapter(listAdapter);
             }
 
         };
@@ -220,6 +222,7 @@ public class CustomersFragment extends Fragment {
                     for(QueryDocumentSnapshot document : queryDocumentSnapshots){
                         if(!c.contains(document.getId()))
                          c.add(document.getId());
+                        listAdapter.notifyDataSetChanged();
                     }
                 });
     }
