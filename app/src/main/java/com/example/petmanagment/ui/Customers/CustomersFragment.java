@@ -59,6 +59,7 @@ public class CustomersFragment extends Fragment {
     FirebaseUser user;
     FirebaseFirestore db;
     ListAdapter listAdapter;
+    boolean del = true;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -176,12 +177,16 @@ public class CustomersFragment extends Fragment {
                 Snackbar.make(recyclerView, "Customer " + deletedCustomer + " deleted", Snackbar.LENGTH_LONG).setAction("Undo", view -> {
                             customers.add(position, deletedCustomer);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            del = false;
 
                         }).setActionTextColor(getResources().getColor(R.color.orange))
                         .setTextColor(getResources().getColor(R.color.black))
                         .setBackgroundTint(getResources().getColor(R.color.white))
                         .show();
             }
+            if(del)
+                deleteCustomers(customers.get(position));
+            del = true;
         }
 
         @Override
