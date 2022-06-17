@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -41,10 +42,12 @@ public class CustomersFragment extends Fragment {
 
 
     private FragmentCustomersBinding binding;
-    private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
-    private EditText firstname, lastname, address, mobile, email;
-    private Button cancel, confirm;
+    private EditText firstname;
+    private EditText lastname;
+    private EditText mobile;
+    private EditText email;
+    private Button confirm;
     ArrayList<String> customers = new ArrayList<>();
     ArrayList<String> flag = new ArrayList<>();
     RecyclerView recyclerView;
@@ -120,7 +123,7 @@ public class CustomersFragment extends Fragment {
 
     public void addUser() {
 
-        dialogBuilder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
         final View popup = getLayoutInflater().inflate(R.layout.popwindow, null);
         firstname = (EditText) popup.findViewById(R.id.firstname);
         lastname = (EditText) popup.findViewById(R.id.lastname);
@@ -143,9 +146,11 @@ public class CustomersFragment extends Fragment {
     }
 
     String deletedCustomer = null;
+    String modifiedCustomer = null;
+
 
     //ItemTouchHelper serve per implementare l'eliminazione dalla lista scorrendo verso sinistra
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
 
         //onMove probabilmente non serve
@@ -182,15 +187,37 @@ public class CustomersFragment extends Fragment {
                         .setTextColor(getResources().getColor(R.color.black))
                         .setBackgroundTint(getResources().getColor(R.color.white))
                         .show();
+            } else {
+                modifiedCustomer = customers.get(position);
+                addUser();
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                /*
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 * TODO credo che il metodo addUser che hai fatto sia corretto eccetto che non deve chiamare alla fine il metodo addNewCustomer
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 * */
             }
         }
 
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             new RecyclerViewSwipeDecorator.Builder(getContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .setIconHorizontalMargin(16, 1)
+                    .setIconHorizontalMargin(16, 2)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.red))
                     .addSwipeLeftActionIcon(R.drawable.delete_icon)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_blue))
+                    .addSwipeRightActionIcon(R.drawable.edit_icon)
                     .create()
                     .decorate();
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
@@ -211,7 +238,7 @@ public class CustomersFragment extends Fragment {
         current_customer.add(customer);
         db.collection(user.getEmail().toString()).document(customer.getName().toString() + '\t' + customer.getLastName().toString()).set(customer, SetOptions.merge()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                System.out.println("OK");
+                Toast.makeText(getContext(), "Customer added successfully", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -232,4 +259,5 @@ public class CustomersFragment extends Fragment {
     public void deleteCustomers(String customerName) {
         db.collection(user.getEmail().toString()).document(customerName).delete();
     }
+
 }
