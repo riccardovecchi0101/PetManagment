@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,22 +23,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentCustomersBinding;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
@@ -59,7 +52,6 @@ public class CustomersFragment extends Fragment {
     FirebaseUser user;
     FirebaseFirestore db;
     ListAdapter listAdapter;
-    boolean del = true;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -167,27 +159,30 @@ public class CustomersFragment extends Fragment {
 
             int position = viewHolder.getAdapterPosition();
             if (direction == ItemTouchHelper.LEFT) {
-                deleteCustomers(customers.get(position));
                 deletedCustomer = customers.get(position);
 
                 customers.remove(position);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
                 //la snackbar serve per tornare indietro in caso di errore nella cancellazione
-                Snackbar.make(recyclerView, "Customer " + deletedCustomer + " deleted", Snackbar.LENGTH_LONG).setAction("Undo", view -> {
+                Snackbar snackbar = Snackbar.make(recyclerView, "Customer " + deletedCustomer + " deleted", Snackbar.LENGTH_LONG).addCallback(new Snackbar.Callback());
+                snackbar.addCallback(new Snackbar.Callback() {
+
+                            @Override
+                            public void onDismissed(Snackbar snackbar, int event) {
+                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                                    deleteCustomers(deletedCustomer);
+                                }
+                            }
+                        }).setAction("Undo", view -> {
                             customers.add(position, deletedCustomer);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            del = false;
 
                         }).setActionTextColor(getResources().getColor(R.color.orange))
                         .setTextColor(getResources().getColor(R.color.black))
                         .setBackgroundTint(getResources().getColor(R.color.white))
                         .show();
             }
-            if(del)
-                deleteCustomers(customers.get(position));
-            else
-                 del = true;
         }
 
         @Override
@@ -214,7 +209,7 @@ public class CustomersFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         ArrayList<Customer> current_customer = new ArrayList<>();
         current_customer.add(customer);
-        db.collection(user.getEmail().toString()).document(customer.getName().toString()+'\t'+customer.getLastName().toString()).set(customer, SetOptions.merge()).addOnCompleteListener(task -> {
+        db.collection(user.getEmail().toString()).document(customer.getName().toString() + '\t' + customer.getLastName().toString()).set(customer, SetOptions.merge()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 System.out.println("OK");
             }
@@ -226,15 +221,15 @@ public class CustomersFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         db.collection(user.getEmail().toString()).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for(QueryDocumentSnapshot document : queryDocumentSnapshots){
-                        if(!c.contains(document.getId()))
-                         c.add(document.getId());
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        if (!c.contains(document.getId()))
+                            c.add(document.getId());
                         listAdapter.notifyDataSetChanged();
                     }
                 });
     }
 
-    public void deleteCustomers(String customerName){
+    public void deleteCustomers(String customerName) {
         db.collection(user.getEmail().toString()).document(customerName).delete();
     }
 }
