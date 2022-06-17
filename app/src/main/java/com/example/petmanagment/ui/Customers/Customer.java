@@ -1,4 +1,4 @@
-package com.example.petmanagment.login;
+package com.example.petmanagment.ui.Customers;
 
 public class Customer {
     private String name, lastName, phone, email;
@@ -45,5 +45,9 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String toString(){
+        return this.name+this.lastName+this.email+this.phone;
     }
 }

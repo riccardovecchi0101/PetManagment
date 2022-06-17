@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,12 +24,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentCustomersBinding;
-import com.example.petmanagment.login.Customer;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
@@ -44,20 +55,15 @@ public class CustomersFragment extends Fragment {
     ArrayList<String> customers = new ArrayList<>();
     ArrayList<String> flag = new ArrayList<>();
     RecyclerView recyclerView;
-
-
     private DatabaseReference dataref;
+    FirebaseUser user;
+    FirebaseFirestore db;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         CustomersViewModel customersViewModel =
                 new ViewModelProvider(this).get(CustomersViewModel.class);
-
-        customers.add("ciao");
-        customers.add("luca");
-        customers.add("riccardogay");
-        customers.add("francesco");
-        customers.add("marco");
 
 
         binding = FragmentCustomersBinding.inflate(inflater, container, false);
@@ -71,8 +77,11 @@ public class CustomersFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new ListAdapter(customers));
+        getCustomers(customers);
+
         final Handler handler = new Handler();
         final Runnable runnable = () -> {
+            getCustomers(customers);
             if (!searchCustomer.getText().toString().isEmpty()) {
                 for (String l : customers) {
                     if (l.startsWith(searchCustomer.getText().toString())) {
@@ -131,7 +140,8 @@ public class CustomersFragment extends Fragment {
 
         confirm.setOnClickListener(view -> {
             Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), email.getText().toString(), mobile.getText().toString());
-            //  writeNewUser(c);
+            addNewCustomer(c);
+            getCustomers(customers);
             dialog.dismiss();
 
         });
@@ -174,7 +184,7 @@ public class CustomersFragment extends Fragment {
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             new RecyclerViewSwipeDecorator.Builder(getContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .setIconHorizontalMargin(16,1)
+                    .setIconHorizontalMargin(16, 1)
                     .addSwipeLeftBackgroundColor(ContextCompat.getColor(getContext(), R.color.red))
                     .addSwipeLeftActionIcon(R.drawable.delete_icon)
                     .create()
@@ -190,8 +200,27 @@ public class CustomersFragment extends Fragment {
         binding = null;
     }
 
-    public void writeNewUser(Customer customer) {
+    public void addNewCustomer(Customer customer) {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+        ArrayList<Customer> current_customer = new ArrayList<>();
+        current_customer.add(customer);
+        db.collection(user.getEmail().toString()).document(customer.getName().toString()+'\t'+customer.getLastName().toString()).set(customer, SetOptions.merge()).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                System.out.println("OK");
+            }
+        });
+    }
 
-        dataref.child("users").setValue(customer);
+    public void getCustomers(ArrayList<String> c) {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+        db.collection(user.getEmail().toString()).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for(QueryDocumentSnapshot document : queryDocumentSnapshots){
+                        if(!c.contains(document.getId()))
+                         c.add(document.getId());
+                    }
+                });
     }
 }
