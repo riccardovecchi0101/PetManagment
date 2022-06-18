@@ -273,7 +273,8 @@ public class CustomersFragment extends Fragment {
 
     public void updateCustomers(String customerName, Customer c) {
         System.out.println(customerName);
-        db.collection(user.getEmail().toString()).document(customerName).set(c).addOnCompleteListener(task -> {
+        db.collection(user.getEmail().toString()).document(customerName).delete();
+        db.collection(user.getEmail().toString()).document(String.format("%s\t%s", c.getName(), c.getLastName())).set(c).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Toast.makeText(getContext(), "Customer modified successfully", Toast.LENGTH_LONG).show();
             }
