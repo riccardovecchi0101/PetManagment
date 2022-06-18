@@ -203,21 +203,6 @@ public class CustomersFragment extends Fragment {
                 elaborateUser("modify", position);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                /*
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 * TODO credo che il metodo addUser che hai fatto sia corretto eccetto che non deve chiamare alla fine il metodo addNewCustomer
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 * */
             }
         }
 
