@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentCustomersBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +36,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
@@ -96,7 +99,7 @@ public class CustomersFragment extends Fragment {
 
         };
 
-        add_customer.setOnClickListener(view -> addUser());
+        add_customer.setOnClickListener(view -> elaborateUser("add",-1));
 
 
         searchCustomer.addTextChangedListener(new TextWatcher() {
@@ -121,8 +124,7 @@ public class CustomersFragment extends Fragment {
         return root;
     }
 
-    public void addUser() {
-
+    public void elaborateUser(String operation, int eventualPosition) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
         final View popup = getLayoutInflater().inflate(R.layout.popwindow, null);
         firstname = (EditText) popup.findViewById(R.id.firstname);
@@ -138,7 +140,16 @@ public class CustomersFragment extends Fragment {
 
         confirm.setOnClickListener(view -> {
             Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), email.getText().toString(), mobile.getText().toString());
-            addNewCustomer(c);
+            switch (operation){
+                case "add":
+                    addNewCustomer(c);
+                   // getCustomers(customers);
+                    break;
+                case "modify":
+                    updateCustomers(customers.get(eventualPosition),c);
+                    customers.set(eventualPosition, String.format("%s\t%s", c.getName(), c.getLastName()));
+                    break;
+            }
             getCustomers(customers);
             dialog.dismiss();
 
@@ -189,7 +200,7 @@ public class CustomersFragment extends Fragment {
                         .show();
             } else {
                 modifiedCustomer = customers.get(position);
-                addUser();
+                elaborateUser("modify", position);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
                 /*
@@ -260,4 +271,14 @@ public class CustomersFragment extends Fragment {
         db.collection(user.getEmail().toString()).document(customerName).delete();
     }
 
+    public void updateCustomers(String customerName, Customer c) {
+        db.collection(user.getEmail().toString()).document(customerName).set(c).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Toast.makeText(getContext(), "Customer modified successfully", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
