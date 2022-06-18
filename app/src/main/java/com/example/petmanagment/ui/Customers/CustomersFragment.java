@@ -139,7 +139,7 @@ public class CustomersFragment extends Fragment {
         dialog.show();
 
         confirm.setOnClickListener(view -> {
-            Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), email.getText().toString(), mobile.getText().toString());
+            Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), mobile.getText().toString(), email.getText().toString());
             switch (operation){
                 case "add":
                     addNewCustomer(c);
