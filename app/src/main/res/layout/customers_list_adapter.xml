@@ -14,7 +14,7 @@
          android:layout_height="match_parent">
 
          <TextView
-             android:id="@+id/textView"
+             android:id="@+id/tvnamesurname"
              android:layout_width="292dp"
              android:layout_height="wrap_content"
              android:layout_gravity="end"
@@ -33,7 +33,7 @@
              app:srcCompat="@drawable/customer_icon" />
 
          <TextView
-             android:id="@+id/textView2"
+             android:id="@+id/tvphone"
              android:layout_width="292sp"
              android:layout_height="wrap_content"
              android:layout_gravity="end"
