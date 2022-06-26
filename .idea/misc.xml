@@ -48,6 +48,7 @@
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.225" />
         <entry key="app/src/main/res/drawable/signin_user_icon.xml" value="0.225" />
         <entry key="app/src/main/res/drawable/user_icon.xml" value="0.2828125" />
+        <entry key="app/src/main/res/drawable/user_icon_orange.xml" value="0.167" />
         <entry key="app/src/main/res/layout-v23/fragment_customers.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.380947340056052" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.21822916666666667" />
