@@ -34,7 +34,8 @@ tools:context=".ui.Customers.Pet.PetActivity">
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pet_list"
-        app:layout_constraintVertical_bias="0.132" />
+        app:layout_constraintVertical_bias="0.132"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/pet_list"
@@ -42,13 +43,13 @@ tools:context=".ui.Customers.Pet.PetActivity">
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_button"
         android:padding="18sp"
-        android:text="CustomerName's Pet:"
+        android:text="CustomerName's Pets:"
         android:textColor="@color/orange"
         android:textColorHint="@color/orange"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.0" />
@@ -67,7 +68,7 @@ tools:context=".ui.Customers.Pet.PetActivity">
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <TextView
         android:id="@+id/customer_info"
@@ -75,29 +76,29 @@ tools:context=".ui.Customers.Pet.PetActivity">
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_button"
         android:padding="18sp"
-        android:text="CustomerInfo"
+        android:text="Customer Info"
         android:textColor="@color/light_blue"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/customer_name"
-        app:layout_constraintVertical_bias="0.024" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="174dp"
         android:layout_height="148dp"
         android:backgroundTint="#00FFFFFF"
-        app:tint="@color/orange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.027"
-        app:srcCompat="@drawable/signin_user_icon" />
+        app:srcCompat="@drawable/user_icon_orange"
+        tools:ignore="ContentDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

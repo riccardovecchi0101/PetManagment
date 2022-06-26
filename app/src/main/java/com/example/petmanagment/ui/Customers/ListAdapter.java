@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     //creo un adapter per la recycle view
     FirebaseUser user;
+    Customer customer;
     FirebaseFirestore db;
     ArrayList<String> list;
 
@@ -38,12 +39,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.tvNameSurname.setText(list.get(position));
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        Customer customer=new Customer();
+        customer = new Customer();
         db.collection(user.getEmail().toString()).document(list.get(position)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 customer = documentSnapshot.toObject(Customer.class);
-                holder.tvPhone.setText(customer.getPhone());
+                holder.tvNameSurname.setText(customer.getName()+" "+customer.getLastName());
             }
         });
     }
