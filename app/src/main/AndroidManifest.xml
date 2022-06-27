@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetManagment">
         <activity
-            android:name=".PetActivity"
+            android:name=".ui.Customers.Pet.PetActivity"
             android:exported="false" />
 
         <provider
