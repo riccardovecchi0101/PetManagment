@@ -52,6 +52,8 @@ public class PetActivity extends AppCompatActivity {
         icon.setOnClickListener(view -> {
             Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(gallery, 3);
+            ImageView camera_icon=findViewById(R.id.imcamera);
+            camera_icon.setVisibility(View.INVISIBLE);
         });
 
 

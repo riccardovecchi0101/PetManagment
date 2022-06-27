@@ -90,7 +90,6 @@ tools:context=".ui.Customers.Pet.PetActivity">
         android:id="@+id/imageView3"
         android:layout_width="174dp"
         android:layout_height="148dp"
-        android:backgroundTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -98,6 +97,20 @@ tools:context=".ui.Customers.Pet.PetActivity">
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.027"
         app:srcCompat="@drawable/user_icon_orange"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imcamera"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.283"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.131"
+        app:srcCompat="@drawable/camera_icon_black"
+        app:tint="@color/light_blue"
         tools:ignore="ContentDescription" />
 
 
