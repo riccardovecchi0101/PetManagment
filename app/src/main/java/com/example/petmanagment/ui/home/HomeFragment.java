@@ -21,6 +21,12 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    TextView text_customers;
+    TextView text_pets;
+    CircularProgressBar customersProgressBar;
+    CircularProgressBar petsProgressBar;
+    float customermax = 10;
+    float petmax = 10;
 
     //contano il numero totale di clienti e animali
     private int totalCustomers = 0;
@@ -37,39 +43,53 @@ public class HomeFragment extends Fragment {
         //la text_home non viene usata ma se tolta da problemi con la classe HomeViewModel, text_customers e text_pets servono per controllare i rispettivi contatori
         final TextView text_home = root.findViewById(R.id.text_home);
 
-        final TextView text_customers = root.findViewById(R.id.tv_clients_number);
-        final TextView text_pets = root.findViewById(R.id.tv_pets_number);
+        text_customers = root.findViewById(R.id.tv_clients_number);
+        text_pets = root.findViewById(R.id.tv_pets_number);
 
         //le due progressbar servono per controllare il progresso delle due barre
-        CircularProgressBar customersProgressBar = root.findViewById(R.id.progress_circular);
-        CircularProgressBar petsProgressBar = root.findViewById(R.id.circularProgressBar);
+        customersProgressBar = root.findViewById(R.id.progress_circular);
+        petsProgressBar = root.findViewById(R.id.circularProgressBar);
 
-        customersProgressBar.setProgressWithAnimation(totalCustomers, 2000L);
-        petsProgressBar.setProgressWithAnimation(totalPets, 2000L);
 
         //setto il massimo di elementi che servono per riempire la barra
-        customersProgressBar.setProgressMax(100f);
-        petsProgressBar.setProgressMax(100f);
+        customersProgressBar.setProgressMax(customermax);
+        petsProgressBar.setProgressMax(petmax);
 
         //conto il numero di utenti e animali da firebase
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(user.getEmail()).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                    for (QueryDocumentSnapshot ignored : queryDocumentSnapshots) {
                         totalCustomers++;
                     }
+                    updateValues(totalCustomers, totalPets);
                 });
-
-
-        //setto le variabili text_customers e text_pets
-        text_customers.setText(String.valueOf(totalCustomers));
-        text_pets.setText(String.valueOf(totalPets));
 
 
         //questa riga sotto potrebbe essere eliminata, cosi come riga 31 ma se eliminate da problemi
         homeViewModel.getText().observe(getViewLifecycleOwner(), text_home::setText);
         return root;
+    }
+
+    private void updateValues(int totalCustomers, int totalPets) {
+        //setto le variabili text_customers e text_pets
+        text_pets.setText(String.valueOf(totalPets));
+        text_customers.setText(String.valueOf(totalCustomers));
+
+        //setto il valore degli anelli
+        customersProgressBar.setProgressWithAnimation(totalCustomers, 2000L);
+        petsProgressBar.setProgressWithAnimation(totalPets, 2000L);
+
+        //aggiorno il valore massimo delle 2 progressbar
+        while (totalCustomers > customermax) {
+            customermax *= 2;
+            customersProgressBar.setProgressMax(customermax);
+        }
+        if (totalPets > petmax) {
+            petmax *= 2;
+            petsProgressBar.setProgressMax(petmax);
+        }
     }
 
     @Override
