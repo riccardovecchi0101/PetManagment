@@ -9,9 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentHomeBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,6 +27,9 @@ public class HomeFragment extends Fragment {
     TextView text_pets;
     CircularProgressBar customersProgressBar;
     CircularProgressBar petsProgressBar;
+
+    FloatingActionButton customerbtn;
+
     float customermax = 10;
     float petmax = 10;
 
@@ -60,11 +65,21 @@ public class HomeFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(user.getEmail()).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    totalCustomers=0;
                     for (QueryDocumentSnapshot ignored : queryDocumentSnapshots) {
                         totalCustomers++;
                     }
                     updateValues(totalCustomers, totalPets);
                 });
+        customerbtn = root.findViewById(R.id.floatingActionButton);
+        customerbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Navigation.findNavController(view).navigate(R.id.action_nav_home_to_nav_customers2);
+
+            }
+        });
 
 
         //questa riga sotto potrebbe essere eliminata, cosi come riga 31 ma se eliminate da problemi
