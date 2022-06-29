@@ -28,7 +28,6 @@
         <entry key="app/src/main/res/drawable/add_button.xml" value="0.206" />
         <entry key="app/src/main/res/drawable/add_button2.xml" value="0.192" />
         <entry key="app/src/main/res/drawable/background2.xml" value="0.17135416666666667" />
-        <entry key="app/src/main/res/drawable/camera_icon_black.xml" value="0.2775" />
         <entry key="app/src/main/res/drawable/camera_icon_white.xml" value="0.2245" />
         <entry key="app/src/main/res/drawable/delete_icon.xml" value="0.1705" />
         <entry key="app/src/main/res/drawable/home_icon.xml" value="0.2405" />
@@ -51,19 +50,18 @@
         <entry key="app/src/main/res/drawable/signin_user_icon.xml" value="0.225" />
         <entry key="app/src/main/res/drawable/user_icon.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/user_icon_orange.xml" value="0.167" />
-        <entry key="app/src/main/res/font/quicksand_bold.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/layout-v23/fragment_customers.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.380947340056052" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20312042236328126" />
-        <entry key="app/src/main/res/layout/activity_pet.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_pet.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/content_home.xml" value="0.2" />
         <entry key="app/src/main/res/layout/customers_list_adapter.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_customers.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.21822916666666667" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.18" />

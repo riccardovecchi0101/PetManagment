@@ -26,6 +26,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     Customer customer;
     FirebaseFirestore db;
     ArrayList<String> list;
+    String id;
 
     public ListAdapter(ArrayList<String> list) {
         this.list = list;
@@ -42,14 +43,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.tvNameSurname.setText(list.get(position));
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        customer = new Customer();
-        db.collection(user.getEmail().toString()).document(list.get(position)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                customer = documentSnapshot.toObject(Customer.class);
-                holder.tvNameSurname.setText(customer.getName()+" "+customer.getLastName());
-            }
-        });
+        System.out.println("ciao sono"+list.get(position));
     }
 
     @Override
@@ -67,7 +61,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             tvNameSurname = itemView.findViewById(R.id.tvnamesurname);
             tvPhone = itemView.findViewById(R.id.tvphone);
             itemView.setOnClickListener(view -> {
+            //  System.out.println(tvNameSurname.getText());
                 Intent clientWindow = new Intent(view.getContext(), PetActivity.class);
+                clientWindow.putExtra("ID", tvPhone.getText());
                 clientWindow.putExtra("NameLastName", tvNameSurname.getText());
                 view.getContext().startActivity(clientWindow);
             });

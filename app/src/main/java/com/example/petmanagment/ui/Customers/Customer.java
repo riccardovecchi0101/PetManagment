@@ -9,14 +9,14 @@ public class Customer {
         this.phone = null;
         this.lastName = null;
         this.email = null;
-        this.UUID = java.util.UUID.randomUUID().toString();
+        this.UUID = null;
     }
-    public Customer(String name, String lastName, String phone, String email){
+    public Customer(String name, String lastName, String phone, String email, String UUID){
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
-        this.UUID = java.util.UUID.randomUUID().toString();
+        this.UUID = UUID;
     }
 
     public String getName() {
