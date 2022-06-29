@@ -43,7 +43,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         holder.tvNameSurname.setText(list.get(position));
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        System.out.println("ciao sono"+list.get(position));
+        db.collection(user.getEmail()).document(holder.tvNameSurname.getText().toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                holder.tvPhone.setText(documentSnapshot.getString("phone"));
+            }
+        });
     }
 
     @Override
