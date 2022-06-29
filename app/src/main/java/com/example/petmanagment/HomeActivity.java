@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,7 +22,6 @@ import com.example.petmanagment.databinding.ActivityHomeBinding;
 import com.example.petmanagment.login.MainActivity;
 import com.example.petmanagment.login.PhotoCreator;
 import com.example.petmanagment.ui.Customers.CustomersFragment;
-import com.example.petmanagment.ui.Settings.SettingsFragment;
 import com.example.petmanagment.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_customers, R.id.nav_settings)
+                R.id.nav_home, R.id.nav_customers)//per aggiungere il menu settings incollare nella lista questo: R.id.nav_settings
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
@@ -88,10 +86,14 @@ public class HomeActivity extends AppCompatActivity {
 
                     return true;
 
-                case R.id.nav_settings:
+                /*case R.id.nav_settings:
                     replaceFragment(SettingsFragment.class, fragmentManager);
                     Objects.requireNonNull(getSupportActionBar()).setTitle("Settings");
-                    return true;
+                    return true;*/  //decommenta per aggiungere al menu la voce settings e aggiungi al file xml activity_main_drawer il seguente codice
+                /*<item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/setting_icon"
+            android:title="@string/menu_settings" />*/
 
             }
             return true;
@@ -103,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         TextView username = (TextView) findViewById(R.id.mailView);
-        ImageView profileImage = (ImageView) findViewById(R.id.ProfileIcon);
+        ImageView profileImage = findViewById(R.id.ProfileIcon);
         //profileImage.setVisibility(View.INVISIBLE);
         profileImage.setOnClickListener(view -> {
             PhotoCreator creator = new PhotoCreator(getApplicationContext());
