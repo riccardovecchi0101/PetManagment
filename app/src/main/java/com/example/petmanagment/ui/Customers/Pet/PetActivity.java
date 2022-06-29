@@ -12,19 +12,35 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.petmanagment.R;
 import com.example.petmanagment.ui.Customers.Customer;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.Objects;
+
+import io.grpc.Context;
 
 public class PetActivity extends AppCompatActivity {
-    Customer customer;
+    //Customer customer;
+    FirebaseUser user;
+    FirebaseFirestore db;
+    String id;
+    FirebaseStorage storage;
+    StorageReference storageRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +54,30 @@ public class PetActivity extends AppCompatActivity {
         String info = extras.getString("NameLastName");
         customerName.setText(info);
 
-        FirebaseUser user  = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore db  = FirebaseFirestore.getInstance();
-        db.collection(user.getEmail()).get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        if(document.getId() == info){
-                            System.out.println(document.getData());
-                        }
-                    }
+        user  = FirebaseAuth.getInstance().getCurrentUser();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        db = FirebaseFirestore.getInstance();
+        assert user != null;
+        db.collection(user.getEmail().toString()).document(info).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                id = documentSnapshot.getString("uuid");
+                assert id != null;
+                storageRef.child(id).getDownloadUrl().addOnSuccessListener(uri -> {
+                    ImageView icon1 = (ImageView)  findViewById(R.id.imageView3);
+                    ImageView smallCamera = (ImageView) findViewById(R.id.imcamera);
+                    smallCamera.setVisibility(View.INVISIBLE);
+                    Glide
+                            .with(getApplicationContext())
+                            .load(uri)
+                            .into(icon1);
+                }).addOnFailureListener(e -> {
+                    System.out.println("no image");
                 });
+            }
+        }
+        );
 
         icon.setOnClickListener(view -> {
             Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -66,6 +96,8 @@ public class PetActivity extends AppCompatActivity {
             Uri selectedImage = data.getData();
             ImageView icon = (ImageView)  findViewById(R.id.imageView3);
             icon.setImageURI(selectedImage);
+            StorageReference imageRef = storageRef.child(id);
+            UploadTask imageLoader = (UploadTask) imageRef.putFile(selectedImage).addOnSuccessListener(taskSnapshot -> Toast.makeText(PetActivity.this, "Upload ok", Toast.LENGTH_LONG)).addOnFailureListener(e -> Toast.makeText(PetActivity.this, "No upload", Toast.LENGTH_LONG));
         }
     }
 }

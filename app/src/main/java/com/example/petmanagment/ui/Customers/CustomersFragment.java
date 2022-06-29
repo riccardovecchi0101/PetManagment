@@ -24,16 +24,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentCustomersBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
@@ -136,15 +139,16 @@ public class CustomersFragment extends Fragment {
         dialog.show();
 
         confirm.setOnClickListener(view -> {
-            Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), mobile.getText().toString(), email.getText().toString());
             switch (operation){
                 case "add":
+                    Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), mobile.getText().toString(), email.getText().toString(), UUID.randomUUID().toString());
                     addNewCustomer(c);
                    // getCustomers(customers);
                     break;
                 case "modify":
-                    updateCustomers(customers.get(eventualPosition),c);
-                    customers.set(eventualPosition, String.format("%s\t%s", c.getName(), c.getLastName()));
+                    updateCustomers(customers.get(eventualPosition), firstname.getText().toString(), lastname.getText().toString(), mobile.getText().toString(), email.getText().toString());
+                    if(!firstname.getText().toString().isEmpty() || !lastname.getText().toString().isEmpty())
+                     customers.set(eventualPosition, String.format("%s\t%s", firstname.getText(), lastname.getText()));
                     break;
             }
             getCustomers(customers);
@@ -253,14 +257,30 @@ public class CustomersFragment extends Fragment {
         db.collection(user.getEmail().toString()).document(customerName).delete();
     }
 
-    public void updateCustomers(String customerName, Customer c) {
-        db.collection(user.getEmail().toString()).document(customerName).delete();
-        db.collection(user.getEmail().toString()).document(String.format("%s\t%s", c.getName(), c.getLastName())).set(c).addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                Toast.makeText(getContext(), "Customer modified successfully", Toast.LENGTH_LONG).show();
-            }
-            else{
-                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+    public void updateCustomers(String customerName, String name, String lastName, String mobile, String email) {
+        if(!name.isEmpty())
+            db.collection(user.getEmail()).document(customerName).update("name", name);
+        if(!lastName.isEmpty())
+            db.collection(user.getEmail()).document(customerName).update("lastName", lastName);
+        if(!email.isEmpty())
+            db.collection(user.getEmail()).document(customerName).update("email", email);
+        if(!mobile.isEmpty())
+            db.collection(user.getEmail()).document(customerName).update("phone", mobile);
+        db.collection(user.getEmail()).document(customerName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                String fileName;
+                if(name.isEmpty() && lastName.isEmpty())
+                    fileName = customerName;
+                else
+                    fileName = name + '\t' + lastName;
+                db.collection(user.getEmail().toString()).document(fileName).set(documentSnapshot.getData(), SetOptions.merge()).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getContext(), "Customer edited successfully", Toast.LENGTH_LONG).show();
+                        if(!fileName.equals(customerName))
+                            db.collection(user.getEmail()).document(customerName).delete();
+                    }
+                });
             }
         });
     }
