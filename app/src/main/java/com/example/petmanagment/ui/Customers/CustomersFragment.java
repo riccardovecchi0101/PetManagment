@@ -85,7 +85,7 @@ public class CustomersFragment extends Fragment {
             getCustomers(customers);
             if (!searchCustomer.getText().toString().isEmpty()) {
                 for (String l : customers) {
-                    if (l.startsWith(searchCustomer.getText().toString())) {
+                    if (l.startsWith(searchCustomer.getText().toString()) || l.contains(searchCustomer.getText().toString())) {
                         flag.add(l);
                     }
                 }
