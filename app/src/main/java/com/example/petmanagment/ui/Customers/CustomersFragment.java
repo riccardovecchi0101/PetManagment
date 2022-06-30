@@ -79,7 +79,6 @@ public class CustomersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(listAdapter);
 
-
         final Handler handler = new Handler();
         final Runnable runnable = () -> {
             getCustomers(customers);
