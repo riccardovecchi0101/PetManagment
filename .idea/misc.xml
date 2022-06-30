@@ -14,7 +14,6 @@
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/activity_pet.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/customers_list_adapter.xml" value="0.25317028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_customers.xml" value="0.22192028985507245" />
-        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/popwindow.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/activity_registration.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/app_bar_home.xml" value="0.20833333333333334" />
@@ -34,6 +33,7 @@
         <entry key="app/src/main/res/drawable/home_icon.xml" value="0.2405" />
         <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_assignment_ind_24.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/drawable/ic_baseline_tag_faces_24.xml" value="0.161" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.225" />
         <entry key="app/src/main/res/drawable/ic_menu_gallery.xml" value="0.225" />
@@ -66,6 +66,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/pets_list_adapter.xml" value="0.17579075425790755" />
         <entry key="app/src/main/res/layout/popwindow.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
         <entry key="app/src/main/res/menu/home.xml" value="0.21822916666666667" />
@@ -77,7 +78,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

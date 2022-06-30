@@ -28,7 +28,6 @@ public class HomeFragment extends Fragment {
     CircularProgressBar customersProgressBar;
     CircularProgressBar petsProgressBar;
 
-    FloatingActionButton customerbtn;
 
     float customermax = 10;
     float petmax = 10;
@@ -71,15 +70,6 @@ public class HomeFragment extends Fragment {
                     }
                     updateValues(totalCustomers, totalPets);
                 });
-        customerbtn = root.findViewById(R.id.floatingActionButton);
-        customerbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Navigation.findNavController(view).navigate(R.id.action_nav_home_to_nav_customers2);
-
-            }
-        });
 
 
         //questa riga sotto potrebbe essere eliminata, cosi come riga 31 ma se eliminate da problemi

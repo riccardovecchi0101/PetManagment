@@ -1,9 +1,11 @@
 package com.example.petmanagment.ui.Customers;
 
-import java.util.UUID;
-
 public class Customer {
-    private String name, lastName, phone, email, UUID;
+    private String name;
+    private String lastName;
+    private String phone;
+    private String email;
+    private final String UUID;
     public Customer(){
         this.name = null;
         this.phone = null;
