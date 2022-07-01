@@ -5,21 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petmanagment.R;
 import com.example.petmanagment.ui.Customers.Customer;
-import com.example.petmanagment.ui.Customers.Pet.PetActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 
@@ -44,13 +40,17 @@ public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.tvNameSurname.setText(list.get(position));
+        holder.tvPet.setText(list.get(position));
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        db.collection(user.getEmail()).document(holder.tvNameSurname.getText().toString()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection(user.getEmail())
+                .document(holder.tvPet.getText().toString())
+                .collection(customer.getName().toString() + customer.getLastName().toString())
+                .document(pet.getName().toString())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                holder.tvPhone.setText(documentSnapshot.getString("phone"));
+                holder.tvRace.setText(documentSnapshot.getString("phone"));
             }
         });
     }
@@ -62,18 +62,18 @@ public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHo
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvNameSurname;
-        TextView tvPhone;
+        TextView tvPet;
+        TextView tvRace;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNameSurname = itemView.findViewById(R.id.tvnamesurname);
-            tvPhone = itemView.findViewById(R.id.tvphone);
+            tvPet = itemView.findViewById(R.id.tvpetname);
+            tvRace = itemView.findViewById(R.id.tvpetrace);
             itemView.setOnClickListener(view -> {
                 //  System.out.println(tvNameSurname.getText());
                 Intent clientWindow = new Intent(view.getContext(), PetActivity.class);
-                clientWindow.putExtra("ID", tvPhone.getText());
-                clientWindow.putExtra("NameLastName", tvNameSurname.getText());
+                clientWindow.putExtra("ID", tvRace.getText());
+                clientWindow.putExtra("NameLastName", tvPet.getText());
                 view.getContext().startActivity(clientWindow);
             });
 

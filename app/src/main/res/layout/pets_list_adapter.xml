@@ -2,7 +2,6 @@
 
  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
      xmlns:app="http://schemas.android.com/apk/res-auto"
-     xmlns:tools="http://schemas.android.com/tools"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:orientation="vertical">
@@ -14,7 +13,7 @@
          android:layout_height="match_parent">
 
          <TextView
-             android:id="@+id/tvnamesurname"
+             android:id="@+id/tvpetname"
              android:layout_width="292dp"
              android:layout_height="wrap_content"
              android:layout_gravity="end"
@@ -33,7 +32,7 @@
              app:srcCompat="@drawable/doggy_icon" />
 
          <TextView
-             android:id="@+id/tvphone"
+             android:id="@+id/tvpetrace"
              android:layout_width="292sp"
              android:layout_height="wrap_content"
              android:layout_gravity="end"

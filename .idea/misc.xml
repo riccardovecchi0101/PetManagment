@@ -59,7 +59,7 @@
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/content_home.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/customers_list_adapter.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/customers_list_adapter.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_customers.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.21822916666666667" />
