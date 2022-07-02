@@ -66,7 +66,7 @@ public class PetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet);
         TextView customerName = (TextView) findViewById(R.id.customer_name);
         ImageView icon = (ImageView) findViewById(R.id.imageView3);
-        EditText searchPet = (EditText) findViewById(R.id.searchpet);
+
 
         recyclerView = findViewById(R.id.recyclerView);
         add_pet = findViewById(R.id.addpet);
@@ -110,43 +110,6 @@ public class PetActivity extends AppCompatActivity {
         listAdapterPet = new ListAdapterPet(pets);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(listAdapterPet);
-
-        final Handler handler = new Handler();
-        final Runnable runnable = () -> {
-            getPets(pets);
-            if (!searchPet.getText().toString().isEmpty()) {
-                for (String l : pets) {
-                    if (l.startsWith(searchPet.getText().toString()) || l.contains(searchPet.getText().toString())) {
-                        flag.add(l);
-                    }
-                }
-
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                recyclerView.setAdapter(new ListAdapter(flag));
-            } else {
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                recyclerView.setAdapter(listAdapterPet);
-            }
-
-        };
-
-
-        searchPet.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                handler.post(runnable);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                handler.removeCallbacksAndMessages(runnable);
-                flag.clear();
-            }
-        });
 
     }
 
