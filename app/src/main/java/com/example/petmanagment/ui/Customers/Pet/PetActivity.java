@@ -4,7 +4,10 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.petmanagment.R;
 import com.example.petmanagment.ui.Customers.Customer;
+import com.example.petmanagment.ui.Customers.ListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +51,7 @@ public class PetActivity extends AppCompatActivity {
     StorageReference storageRef;
     RecyclerView recyclerView;
     ArrayList<String> pets = new ArrayList<>();
+    ArrayList<String> flag = new ArrayList<>();
     ListAdapterPet listAdapterPet;
     private EditText name;
     private EditText race;
@@ -61,6 +66,7 @@ public class PetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet);
         TextView customerName = (TextView) findViewById(R.id.customer_name);
         ImageView icon = (ImageView) findViewById(R.id.imageView3);
+        EditText searchPet = (EditText) findViewById(R.id.searchpet);
 
         recyclerView = findViewById(R.id.recyclerView);
         add_pet = findViewById(R.id.addpet);
@@ -100,9 +106,48 @@ public class PetActivity extends AppCompatActivity {
             camera_icon.setVisibility(View.INVISIBLE);
         });
 
+        getPets(pets);
         listAdapterPet = new ListAdapterPet(pets);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(listAdapterPet);
+
+        final Handler handler = new Handler();
+        final Runnable runnable = () -> {
+            getPets(pets);
+            if (!searchPet.getText().toString().isEmpty()) {
+                for (String l : pets) {
+                    if (l.startsWith(searchPet.getText().toString()) || l.contains(searchPet.getText().toString())) {
+                        flag.add(l);
+                    }
+                }
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                recyclerView.setAdapter(new ListAdapter(flag));
+            } else {
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                recyclerView.setAdapter(listAdapterPet);
+            }
+
+        };
+
+
+        searchPet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler.post(runnable);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                handler.removeCallbacksAndMessages(runnable);
+                flag.clear();
+            }
+        });
+
     }
 
     String deletedPet = null;

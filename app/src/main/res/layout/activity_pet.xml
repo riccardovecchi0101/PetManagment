@@ -21,6 +21,27 @@ tools:context=".ui.Customers.Pet.PetActivity">
     app:layout_constraintVertical_bias="0.96"
     tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
+    <EditText
+        android:id="@+id/searchpet"
+        android:layout_width="340sp"
+        android:layout_height="wrap_content"
+        android:autofillHints="name"
+        android:background="@drawable/rounded_corner_button"
+        android:drawableStart="@drawable/lens_icon"
+        android:drawablePadding="10sp"
+        android:hint="Search Customers"
+        android:inputType="textNoSuggestions"
+        android:padding="18sp"
+        android:textColor="@color/orange"
+        android:textColorHint="@color/orange"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.225"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.406" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="410dp"
@@ -28,14 +49,16 @@ tools:context=".ui.Customers.Pet.PetActivity">
         android:background="@color/fui_transparent"
         android:backgroundTint="@color/fui_transparent"
         android:clickable="true"
+        android:focusable="true"
         android:foregroundTint="@color/fui_transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pet_list"
-        app:layout_constraintVertical_bias="0.132"
-        android:focusable="true" />
+        app:layout_constraintVertical_bias="0.493" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/pet_list"

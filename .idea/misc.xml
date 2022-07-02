@@ -11,10 +11,18 @@
         <entry key="..\:/Users/utente/StudioProjects/PetManagment1/app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.2463768115942029" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment1/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment1/app/src/main/res/layout/activity_registration.xml" value="0.14175724637681159" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/drawable-v24/dog_icon.xml" value="0.122" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/drawable/delete_icon.xml" value="0.122" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/drawable/edit_icon.xml" value="0.122" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/drawable/lock_icon.xml" value="0.122" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/drawable/logout_icon.xml" value="0.122" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.1625" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/activity_pet.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/customers_list_adapter.xml" value="0.25317028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_customers.xml" value="0.22192028985507245" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/popwindow.xml" value="0.22192028985507245" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/smallpopup.xml" value="0.1484375" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/activity_registration.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/app_bar_home.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/content_home.xml" value="0.1" />
@@ -33,7 +41,6 @@
         <entry key="app/src/main/res/drawable/home_icon.xml" value="0.2405" />
         <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_assignment_ind_24.xml" value="0.3260416666666667" />
-        <entry key="app/src/main/res/drawable/ic_baseline_tag_faces_24.xml" value="0.161" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.225" />
         <entry key="app/src/main/res/drawable/ic_menu_gallery.xml" value="0.225" />
@@ -66,7 +73,6 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/pets_list_adapter.xml" value="0.17579075425790755" />
         <entry key="app/src/main/res/layout/popwindow.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/popwindow_pet.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
@@ -79,7 +85,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

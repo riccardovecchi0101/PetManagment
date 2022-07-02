@@ -39,12 +39,12 @@ public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        System.out.println("ciaooooooo"+customer.getName());
+       // System.out.println("ciaooooooo"+customer.getName());
 
         holder.tvPet.setText(list.get(position));
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        db.collection(user.getEmail())
+        /*db.collection(user.getEmail())
                 .document(customer.getName().toString() + ' ' + customer.getLastName())
                 .collection(customer.getName().toString() + ' ' + customer.getLastName().toString())
                 .document(holder.tvPet.getText().toString())
@@ -53,7 +53,7 @@ public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHo
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         holder.tvRace.setText(documentSnapshot.getString("race"));
                     }
-                });
+                });*/
     }
 
     @Override
