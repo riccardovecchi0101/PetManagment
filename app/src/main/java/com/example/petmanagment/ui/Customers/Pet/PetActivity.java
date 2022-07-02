@@ -2,6 +2,7 @@ package com.example.petmanagment.ui.Customers.Pet;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +43,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class PetActivity extends AppCompatActivity {
     FirebaseUser user;
@@ -111,10 +115,70 @@ public class PetActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(listAdapterPet);
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
     }
 
     String deletedPet = null;
     String modifiedPet = null;
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        //onMove probabilmente non serve
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+            if (direction == ItemTouchHelper.LEFT) {
+                deletedPet = pets.get(position);
+
+                pets.remove(position);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+                //la snackbar serve per tornare indietro in caso di errore nella cancellazione
+                Snackbar snackbar = Snackbar.make(recyclerView, "Customer " + deletedPet + " deleted", Snackbar.LENGTH_LONG).addCallback(new Snackbar.Callback());
+                snackbar.addCallback(new Snackbar.Callback() {
+
+                            @Override
+                            public void onDismissed(Snackbar snackbar, int event) {
+                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                                    deletePets(deletedPet);
+                                }
+                            }
+                        }).setAction("Undo", view -> {
+                            pets.add(position, deletedPet);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+                        }).setActionTextColor(getResources().getColor(R.color.orange))
+                        .setTextColor(getResources().getColor(R.color.black))
+                        .setBackgroundTint(getResources().getColor(R.color.white))
+                        .show();
+            } else {
+                modifiedPet = pets.get(position);
+                elaboratePet("modify", position);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+            }
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(getApplicationContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .setIconHorizontalMargin(16)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.delete_icon)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.light_blue))
+                    .addSwipeRightActionIcon(R.drawable.edit_icon)
+                    .create()
+                    .decorate();
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
+
 
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
