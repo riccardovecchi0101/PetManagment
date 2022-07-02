@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background3"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/newlisticon"
+        android:layout_width="178sp"
+        android:layout_height="180sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.047"
+        app:srcCompat="@drawable/doggy_icon"
+        android:contentDescription="@string/app_name"/>
+
+    <EditText
+        android:id="@+id/firstname"
+        android:layout_width="250sp"
+        android:paddingStart="20sp"
+        android:paddingEnd="20sp"
+        android:layout_height="45sp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/rounded_corner_textview"
+        android:hint="Name"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newlisticon"
+        android:autofillHints="name"
+        android:inputType="text"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/race"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:paddingStart="20sp"
+        android:paddingEnd="20sp"
+        android:background="@drawable/rounded_corner_textview"
+        android:layout_width="250sp"
+        android:layout_height="45sp"
+        android:layout_marginTop="18dp"
+        android:hint="Race"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstname"
+        android:autofillHints="name"
+        android:inputType="text"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/typology"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:background="@drawable/rounded_corner_textview"
+        android:paddingStart="20sp"
+        android:paddingEnd="20sp"
+        android:layout_width="250sp"
+        android:layout_height="45sp"
+        android:layout_marginTop="18dp"
+        android:hint="Typology"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/race"
+        android:inputType="none"
+        tools:ignore="HardcodedText" />
+
+
+    <Button
+        android:id="@+id/pet_button"
+        android:layout_width="250sp"
+        android:layout_height="45sp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_corner_button"
+        android:text="Confirm"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:backgroundTint="@color/light_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typology"
+        app:layout_constraintVertical_bias="0.3"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:layout_height="70sp"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pet_button"
+        app:layout_constraintVertical_bias="0.047"
+        tools:ignore="ContentDescription" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,11 +39,11 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class PetActivity extends AppCompatActivity {
-    //Customer customer;
     FirebaseUser user;
     FirebaseFirestore db;
     String id;
     FirebaseStorage storage;
+    String info;
     StorageReference storageRef;
     RecyclerView recyclerView;
     ArrayList<String> pets = new ArrayList<>();
@@ -52,11 +52,7 @@ public class PetActivity extends AppCompatActivity {
     private EditText race;
     private EditText typology;
     private AlertDialog dialog;
-    final ImageButton add_pet = findViewById(R.id.addpet);
-
-
-    //TODO bisogna impostare customer al cliente corrente
-    Customer customer;
+    private ImageButton add_pet;
 
 
     @Override
@@ -67,13 +63,13 @@ public class PetActivity extends AppCompatActivity {
         ImageView icon = (ImageView) findViewById(R.id.imageView3);
 
         recyclerView = findViewById(R.id.recyclerView);
-
-        add_pet.setOnClickListener(view -> elaboratePet("add",-1));
-
+        add_pet = findViewById(R.id.addpet);
+        add_pet.setOnClickListener(view -> elaboratePet("add", -1));
 
         Bundle extras = getIntent().getExtras();
-        String info = extras.getString("NameLastName");
+        info = extras.getString("NameLastName");
         customerName.setText(info);
+
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
@@ -104,14 +100,13 @@ public class PetActivity extends AppCompatActivity {
             camera_icon.setVisibility(View.INVISIBLE);
         });
 
-        ListAdapterPet listAdapter = new ListAdapterPet(pets);
+        listAdapterPet = new ListAdapterPet(pets);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(listAdapter);
+        recyclerView.setAdapter(listAdapterPet);
     }
 
     String deletedPet = null;
     String modifiedPet = null;
-
 
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
@@ -161,55 +156,31 @@ public class PetActivity extends AppCompatActivity {
         }
     }
 
-    public void getPets(ArrayList<String> c) {
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        db = FirebaseFirestore.getInstance();
-        db.collection(user.getEmail())
-                .document(customer.getName() + '\t' + customer.getLastName())
-                .collection(customer.getName() + customer.getLastName())
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        if (!c.contains(document.getId()))
-                            c.add(document.getId());
-                        listAdapterPet.notifyDataSetChanged();
-                    }
-                });
-    }
-
     public void addNewPet(Pet pet) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         ArrayList<Pet> current_pet = new ArrayList<>();
         current_pet.add(pet);
         db.collection(user.getEmail())
-                .document(customer.getName() + '\t' + customer.getLastName())
-                .collection(customer.getName() + customer.getLastName())
+                .document(info)
+                .collection(info)
                 .document(pet.getName())
                 .set(pet, SetOptions.merge()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Pet added successfully", Toast.LENGTH_LONG).show();
                     }
                 });
-    }
 
-    public void deletePets(String name) {
-        db.collection(user.getEmail())
-                .document(customer.getName() + '\t' + customer.getLastName())
-                .collection(customer.getName() + customer.getLastName())
-                .document(name)
-                .delete();
     }
-
 
     public void elaboratePet(String operation, int eventualPosition) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        final View popup = getLayoutInflater().inflate(R.layout.popwindow, null);
+        final View popup = getLayoutInflater().inflate(R.layout.popwindow_pet, null);
         name = (EditText) popup.findViewById(R.id.firstname);
-        race = (EditText) popup.findViewById(R.id.lastname);
-        typology = (EditText) popup.findViewById(R.id.phone);
+        race = (EditText) popup.findViewById(R.id.race);
+        typology = (EditText) popup.findViewById(R.id.typology);
 
-        Button confirm = (Button) popup.findViewById(R.id.cbutton);
+        Button confirm = (Button) popup.findViewById(R.id.pet_button);
 
         dialogBuilder.setView(popup);
         dialog = dialogBuilder.create();
@@ -219,8 +190,8 @@ public class PetActivity extends AppCompatActivity {
             switch (operation) {
                 case "add":
                     Pet c = new Pet(name.getText().toString(), race.getText().toString(), typology.getText().toString(), UUID.randomUUID().toString());
+
                     addNewPet(c);
-                    // getCustomers(customers);
                     break;
                 case "modify":
                     updatePets(pets.get(eventualPosition), name.getText().toString(), race.getText().toString(), typology.getText().toString());
@@ -232,30 +203,32 @@ public class PetActivity extends AppCompatActivity {
             dialog.dismiss();
 
         });
+
     }
 
+    //TODO non testato
     public void updatePets(String petname, String name, String race, String typology) {
-        if (!name.isEmpty())
+        /*if (!name.isEmpty())
             db.collection(user.getEmail())
-                    .document(customer.getName() + '\t' + customer.getLastName())
-                    .collection(customer.getName() + customer.getLastName())
+                    .document(info)
+                    .collection(info)
                     .document(name)
                     .update("name", name);
         if (!race.isEmpty())
             db.collection(user.getEmail())
-                    .document(customer.getName() + '\t' + customer.getLastName())
-                    .collection(customer.getName() + customer.getLastName())
+                    .document(info)
+                    .collection(info)
                     .document(name)
                     .update("race", race);
         if (!typology.isEmpty())
             db.collection(user.getEmail())
-                    .document(customer.getName() + '\t' + customer.getLastName())
-                    .collection(customer.getName() + customer.getLastName())
+                    .document(info)
+                    .collection(info)
                     .document(name)
                     .update("typology", typology);
         db.collection(user.getEmail())
-                .document(customer.getName() + '\t' + customer.getLastName())
-                .collection(customer.getName() + customer.getLastName())
+                .document(info)
+                .collection(info)
                 .document(name).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -269,12 +242,43 @@ public class PetActivity extends AppCompatActivity {
                                 Toast.makeText(PetActivity.this, "Customer edited successfully", Toast.LENGTH_LONG).show();
                                 if (!fileName.equals(petname))
                                     db.collection(user.getEmail())
-                                            .document(customer.getName() + '\t' + customer.getLastName())
-                                            .collection(customer.getName() + customer.getLastName())
+                                            .document(info)
+                                            .collection(info)
                                             .document(name).delete();
                             }
                         });
                     }
                 });
+                */
     }
+
+    //TODO non testato
+    public void getPets(ArrayList<String> c) {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+        db.collection(user.getEmail())
+                .document(info)
+                .collection(info)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        System.out.println(document.getData());
+                        if (!c.contains(document.getId()))
+                            c.add(document.getId());
+                        listAdapterPet.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    //TODO non testato
+    public void deletePets(String name) {
+        /*db.collection(user.getEmail())
+                .document(info)
+                .collection(info)
+                .document(name)
+                .delete();*/
+
+    }
+
 }

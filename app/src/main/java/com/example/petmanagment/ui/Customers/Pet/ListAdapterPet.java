@@ -22,11 +22,10 @@ import java.util.ArrayList;
 public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHolder> {
     //creo un adapter per la recycle view
     FirebaseUser user;
+    //TODO la variabile customer non è inizializzata ai valori corretti
     Customer customer;
-    Pet pet;
     FirebaseFirestore db;
     ArrayList<String> list;
-    String id;
 
     public ListAdapterPet(ArrayList<String> list) {
         this.list = list;
@@ -40,19 +39,21 @@ public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        System.out.println("ciaooooooo"+customer.getName());
+
         holder.tvPet.setText(list.get(position));
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         db.collection(user.getEmail())
+                .document(customer.getName().toString() + ' ' + customer.getLastName())
+                .collection(customer.getName().toString() + ' ' + customer.getLastName().toString())
                 .document(holder.tvPet.getText().toString())
-                .collection(customer.getName().toString() + customer.getLastName().toString())
-                .document(pet.getName().toString())
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                holder.tvRace.setText(documentSnapshot.getString("phone"));
-            }
-        });
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        holder.tvRace.setText(documentSnapshot.getString("race"));
+                    }
+                });
     }
 
     @Override

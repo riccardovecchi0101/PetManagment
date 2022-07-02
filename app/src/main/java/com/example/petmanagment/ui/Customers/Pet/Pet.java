@@ -8,15 +8,7 @@ public class Pet {
     private String UUID;
 
 
-    public Pet(String s, String toString, String string, String s1) {
-        this.name = null;
-        this.race = null;
-        this.typology = null;
-        this.UUID = null;
-
-    }
-
-    public Pet(String name, String race, String typology) {
+    public Pet(String name, String race, String typology, String UUID) {
         this.name = name;
         this.race = race;
         this.typology = typology;

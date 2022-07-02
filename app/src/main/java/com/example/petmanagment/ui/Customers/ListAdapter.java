@@ -22,10 +22,8 @@ import java.util.ArrayList;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
     //creo un adapter per la recycle view
     FirebaseUser user;
-    Customer customer;
     FirebaseFirestore db;
     ArrayList<String> list;
-    String id;
 
     public ListAdapter(ArrayList<String> list) {
         this.list = list;
