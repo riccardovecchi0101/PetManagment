@@ -23,8 +23,8 @@ tools:context=".ui.Customers.Pet.PetActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="410dp"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="700dp"
         android:background="@color/fui_transparent"
         android:backgroundTint="@color/fui_transparent"
         android:clickable="true"
@@ -32,10 +32,10 @@ tools:context=".ui.Customers.Pet.PetActivity">
         android:foregroundTint="@color/fui_transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pet_list"
-        app:layout_constraintVertical_bias="0.493" >
+        app:layout_constraintVertical_bias="0.0">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -43,7 +43,6 @@ tools:context=".ui.Customers.Pet.PetActivity">
         android:id="@+id/pet_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner_button"
         android:padding="18sp"
         android:text="Pets:"
         android:textColor="@color/orange"

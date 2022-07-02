@@ -22,8 +22,7 @@ import java.util.ArrayList;
 public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHolder> {
     //creo un adapter per la recycle view
     FirebaseUser user;
-    //TODO la variabile customer non è inizializzata ai valori corretti
-    Customer customer;
+
     FirebaseFirestore db;
     ArrayList<String> list;
 
@@ -64,16 +63,13 @@ public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHo
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvPet;
-        TextView tvRace;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPet = itemView.findViewById(R.id.tvpetname);
-            tvRace = itemView.findViewById(R.id.tvpetrace);
             itemView.setOnClickListener(view -> {
                 //  System.out.println(tvNameSurname.getText());
                 Intent clientWindow = new Intent(view.getContext(), PetActivity.class);
-                clientWindow.putExtra("ID", tvRace.getText());
                 clientWindow.putExtra("NameLastName", tvPet.getText());
                 view.getContext().startActivity(clientWindow);
             });
