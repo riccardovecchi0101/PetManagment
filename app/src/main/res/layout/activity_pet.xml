@@ -115,5 +115,21 @@ tools:context=".ui.Customers.Pet.PetActivity">
         app:tint="@color/light_blue"
         tools:ignore="ContentDescription" />
 
+    <EditText
+        android:id="@+id/custoInfo"
+        android:layout_width="187dp"
+        android:layout_height="81dp"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.246" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

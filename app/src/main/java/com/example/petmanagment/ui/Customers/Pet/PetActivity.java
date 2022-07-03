@@ -56,6 +56,8 @@ public class PetActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<String> pets = new ArrayList<>();
     ArrayList<String> flag = new ArrayList<>();
+    String deletedPet = null;
+    String modifiedPet = null;
     ListAdapterPet listAdapterPet;
     private EditText name;
     private EditText race;
@@ -70,6 +72,12 @@ public class PetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet);
         TextView customerName = (TextView) findViewById(R.id.customer_name);
         ImageView icon = (ImageView) findViewById(R.id.imageView3);
+        TextView infoLink = (TextView) findViewById(R.id.customer_info);
+        TextView custoInfo = (TextView) findViewById(R.id.custoInfo);
+        custoInfo.setCursorVisible(false);
+        custoInfo.setTextSize(10);
+
+        custoInfo.setVisibility(View.INVISIBLE);
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -86,11 +94,24 @@ public class PetActivity extends AppCompatActivity {
         storageRef = storage.getReference();
         db = FirebaseFirestore.getInstance();
         assert user != null;
+
         db.collection(user.getEmail()).document(info).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                String name, lastName, phone, email;
+                String content;
+
                 id = documentSnapshot.getString("uuid");
+                name = documentSnapshot.getString("name");
+                lastName = documentSnapshot.getString("lastName");
+                phone = documentSnapshot.getString("phone");
+                email = documentSnapshot.getString("email");
+
+                content = String.format("name:%s\nlastName:%s\nphone:%s\nemail:%s\n",name,lastName,phone,email);
+                custoInfo.setText(content);
+
                 assert id != null;
+
                 storageRef.child(id).getDownloadUrl().addOnSuccessListener(uri -> {
                     ImageView icon1 = (ImageView) findViewById(R.id.imageView3);
                     ImageView smallCamera = (ImageView) findViewById(R.id.imcamera);
@@ -118,10 +139,21 @@ public class PetActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
+
+
+        infoLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (custoInfo.getVisibility() == View.VISIBLE)
+                    custoInfo.setVisibility(View.INVISIBLE);
+                else
+                    custoInfo.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
-    String deletedPet = null;
-    String modifiedPet = null;
+
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         //onMove probabilmente non serve
         @Override
@@ -280,7 +312,7 @@ public class PetActivity extends AppCompatActivity {
 
     //TODO non testato
     public void updatePets(String petname, String name, String race, String typology) {
-        /*if (!name.isEmpty())
+        if (!name.isEmpty())
             db.collection(user.getEmail())
                     .document(info)
                     .collection(info)
@@ -321,7 +353,7 @@ public class PetActivity extends AppCompatActivity {
                         });
                     }
                 });
-                */
+
     }
 
     //TODO non testato
