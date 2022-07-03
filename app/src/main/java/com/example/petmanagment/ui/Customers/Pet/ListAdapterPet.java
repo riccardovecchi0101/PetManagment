@@ -43,16 +43,6 @@ public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHo
         holder.tvPet.setText(list.get(position));
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        /*db.collection(user.getEmail())
-                .document(customer.getName().toString() + ' ' + customer.getLastName())
-                .collection(customer.getName().toString() + ' ' + customer.getLastName().toString())
-                .document(holder.tvPet.getText().toString())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        holder.tvRace.setText(documentSnapshot.getString("race"));
-                    }
-                });*/
     }
 
     @Override

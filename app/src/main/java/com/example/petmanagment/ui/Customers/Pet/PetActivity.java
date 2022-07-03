@@ -130,7 +130,7 @@ public class PetActivity extends AppCompatActivity {
 
         getPets(pets);
         listAdapterPet = new ListAdapterPet(pets);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(listAdapterPet);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -302,7 +302,7 @@ public class PetActivity extends AppCompatActivity {
                     else
                         updatePets(pets.get(eventualPosition), name.getText().toString(), race.getText().toString(), "Cat");
                     if (!name.getText().toString().isEmpty() || !race.getText().toString().isEmpty())
-                        pets.set(eventualPosition, String.format("%s\t%s", name.getText(), race.getText()));
+                        pets.set(eventualPosition, String.format("%s", name.getText()));
                     break;
             }
             getPets(pets);
@@ -313,7 +313,6 @@ public class PetActivity extends AppCompatActivity {
     }
 
     public void updatePets(String petname, String name, String race, String typology) {
-
         db.collection(user.getEmail())
                 .document(info)
                 .collection(info)
@@ -326,32 +325,38 @@ public class PetActivity extends AppCompatActivity {
                         else
                             fileName = name;
                         System.out.println(fileName);
-                        db.collection(user.getEmail()).document(fileName).set(documentSnapshot.getData(), SetOptions.merge()).addOnCompleteListener(task -> {
+                        db.collection(user.getEmail()).document(info).collection(info).document(fileName).set(documentSnapshot.getData(), SetOptions.merge()).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(PetActivity.this, "Customer edited successfully", Toast.LENGTH_LONG).show();
                                 if (!fileName.equals(petname))
                                     db.collection(user.getEmail())
                                             .document(info)
                                             .collection(info)
-                                            .document(name).delete();
+                                            .document(petname).delete();
                                 if (!name.isEmpty())
                                     db.collection(user.getEmail())
                                             .document(info)
                                             .collection(info)
-                                            .document(name)
+                                            .document(fileName)
                                             .update("name", name);
                                 if (!race.isEmpty())
                                     db.collection(user.getEmail())
                                             .document(info)
                                             .collection(info)
-                                            .document(name)
+                                            .document(fileName)
                                             .update("race", race);
                                 if (!typology.isEmpty())
                                     db.collection(user.getEmail())
                                             .document(info)
                                             .collection(info)
-                                            .document(name)
+                                            .document(fileName)
                                             .update("typology", typology);
+
+                                pets.remove(petname);
+                                listAdapterPet = new ListAdapterPet(pets);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                recyclerView.setAdapter(listAdapterPet);
+
                             }
                         });
                     }
@@ -367,7 +372,6 @@ public class PetActivity extends AppCompatActivity {
                 .collection(info)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         System.out.println(document.getData());
                         if (!c.contains(document.getId()))
@@ -379,11 +383,11 @@ public class PetActivity extends AppCompatActivity {
 
     //TODO non testato
     public void deletePets(String name) {
-        /*db.collection(user.getEmail())
+        db.collection(user.getEmail())
                 .document(info)
                 .collection(info)
                 .document(name)
-                .delete();*/
+                .delete();
 
     }
 
