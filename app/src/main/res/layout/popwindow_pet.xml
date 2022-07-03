@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/newlisticon"
-        android:layout_width="178sp"
-        android:layout_height="180sp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.047"
-        app:srcCompat="@drawable/doggy_icon"
+        app:srcCompat="@drawable/dog_icon_popup"
         android:contentDescription="@string/app_name"/>
 
     <EditText
@@ -28,7 +28,7 @@
         android:paddingStart="20sp"
         android:paddingEnd="20sp"
         android:layout_height="45sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_corner_textview"
         android:hint="Name"
         android:textColor="@color/white"

@@ -3,6 +3,7 @@ package com.example.petmanagment.ui.Customers.Pet;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -381,7 +382,6 @@ public class PetActivity extends AppCompatActivity {
                 });
     }
 
-    //TODO non testato
     public void deletePets(String name) {
         db.collection(user.getEmail())
                 .document(info)
