@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,8 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.petmanagment.R;
-import com.example.petmanagment.ui.Customers.Customer;
-import com.example.petmanagment.ui.Customers.ListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,7 +57,8 @@ public class PetActivity extends AppCompatActivity {
     ListAdapterPet listAdapterPet;
     private EditText name;
     private EditText race;
-    private EditText typology;
+    private CheckBox typology_dog;
+    private CheckBox typology_cat;
     private AlertDialog dialog;
     private ImageButton add_pet;
 
@@ -107,7 +104,7 @@ public class PetActivity extends AppCompatActivity {
                 phone = documentSnapshot.getString("phone");
                 email = documentSnapshot.getString("email");
 
-                content = String.format("name:%s\nlastName:%s\nphone:%s\nemail:%s\n",name,lastName,phone,email);
+                content = String.format("name:%s\nlastName:%s\nphone:%s\nemail:%s\n", name, lastName, phone, email);
                 custoInfo.setText(content);
 
                 assert id != null;
@@ -138,7 +135,6 @@ public class PetActivity extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
 
 
         infoLink.setOnClickListener(new View.OnClickListener() {
@@ -282,8 +278,8 @@ public class PetActivity extends AppCompatActivity {
         final View popup = getLayoutInflater().inflate(R.layout.popwindow_pet, null);
         name = (EditText) popup.findViewById(R.id.firstname);
         race = (EditText) popup.findViewById(R.id.race);
-        typology = (EditText) popup.findViewById(R.id.typology);
-
+        typology_dog = (CheckBox) popup.findViewById(R.id.checkBoxDog);
+        typology_cat = (CheckBox) popup.findViewById(R.id.checkBoxCat);
         Button confirm = (Button) popup.findViewById(R.id.pet_button);
 
         dialogBuilder.setView(popup);
@@ -293,12 +289,18 @@ public class PetActivity extends AppCompatActivity {
         confirm.setOnClickListener(view -> {
             switch (operation) {
                 case "add":
-                    Pet c = new Pet(name.getText().toString(), race.getText().toString(), typology.getText().toString(), UUID.randomUUID().toString());
-
+                    Pet c;
+                    if (typology_dog.isChecked())
+                        c = new Pet(name.getText().toString(), race.getText().toString(), "Dog", UUID.randomUUID().toString());
+                    else
+                        c = new Pet(name.getText().toString(), race.getText().toString(), "Cat", UUID.randomUUID().toString());
                     addNewPet(c);
                     break;
                 case "modify":
-                    updatePets(pets.get(eventualPosition), name.getText().toString(), race.getText().toString(), typology.getText().toString());
+                    if (typology_dog.isChecked())
+                        updatePets(pets.get(eventualPosition), name.getText().toString(), race.getText().toString(), "Dog");
+                    else
+                        updatePets(pets.get(eventualPosition), name.getText().toString(), race.getText().toString(), "Cat");
                     if (!name.getText().toString().isEmpty() || !race.getText().toString().isEmpty())
                         pets.set(eventualPosition, String.format("%s\t%s", name.getText(), race.getText()));
                     break;
@@ -310,37 +312,20 @@ public class PetActivity extends AppCompatActivity {
 
     }
 
-    //TODO non testato
     public void updatePets(String petname, String name, String race, String typology) {
-        if (!name.isEmpty())
-            db.collection(user.getEmail())
-                    .document(info)
-                    .collection(info)
-                    .document(name)
-                    .update("name", name);
-        if (!race.isEmpty())
-            db.collection(user.getEmail())
-                    .document(info)
-                    .collection(info)
-                    .document(name)
-                    .update("race", race);
-        if (!typology.isEmpty())
-            db.collection(user.getEmail())
-                    .document(info)
-                    .collection(info)
-                    .document(name)
-                    .update("typology", typology);
+
         db.collection(user.getEmail())
                 .document(info)
                 .collection(info)
-                .document(name).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                .document(petname).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String fileName;
-                        if (name.isEmpty() && race.isEmpty())
+                        if (name.isEmpty())
                             fileName = petname;
                         else
-                            fileName = name + race + typology;
+                            fileName = name;
+                        System.out.println(fileName);
                         db.collection(user.getEmail()).document(fileName).set(documentSnapshot.getData(), SetOptions.merge()).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(PetActivity.this, "Customer edited successfully", Toast.LENGTH_LONG).show();
@@ -349,6 +334,24 @@ public class PetActivity extends AppCompatActivity {
                                             .document(info)
                                             .collection(info)
                                             .document(name).delete();
+                                if (!name.isEmpty())
+                                    db.collection(user.getEmail())
+                                            .document(info)
+                                            .collection(info)
+                                            .document(name)
+                                            .update("name", name);
+                                if (!race.isEmpty())
+                                    db.collection(user.getEmail())
+                                            .document(info)
+                                            .collection(info)
+                                            .document(name)
+                                            .update("race", race);
+                                if (!typology.isEmpty())
+                                    db.collection(user.getEmail())
+                                            .document(info)
+                                            .collection(info)
+                                            .document(name)
+                                            .update("typology", typology);
                             }
                         });
                     }
@@ -356,7 +359,6 @@ public class PetActivity extends AppCompatActivity {
 
     }
 
-    //TODO non testato
     public void getPets(ArrayList<String> c) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();

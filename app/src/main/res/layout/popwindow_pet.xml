@@ -13,7 +13,7 @@
         android:layout_height="180sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +28,15 @@
         android:paddingStart="20sp"
         android:paddingEnd="20sp"
         android:layout_height="45sp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded_corner_textview"
         android:hint="Name"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.5
+"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newlisticon"
         android:autofillHints="name"
@@ -44,39 +45,22 @@
 
     <EditText
         android:id="@+id/race"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:paddingStart="20sp"
-        android:paddingEnd="20sp"
-        android:background="@drawable/rounded_corner_textview"
         android:layout_width="250sp"
         android:layout_height="45sp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="20dp"
+        android:autofillHints="name"
+        android:background="@drawable/rounded_corner_textview"
         android:hint="Race"
+        android:inputType="text"
+        android:paddingStart="20sp"
+        android:paddingEnd="20sp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstname"
-        android:autofillHints="name"
-        android:inputType="text"
-        tools:ignore="HardcodedText" />
-
-    <EditText
-        android:id="@+id/typology"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:background="@drawable/rounded_corner_textview"
-        android:paddingStart="20sp"
-        android:paddingEnd="20sp"
-        android:layout_width="250sp"
-        android:layout_height="45sp"
-        android:layout_marginTop="18dp"
-        android:hint="Typology"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/race"
-        android:inputType="none"
         tools:ignore="HardcodedText" />
 
 
@@ -84,7 +68,7 @@
         android:id="@+id/pet_button"
         android:layout_width="250sp"
         android:layout_height="45sp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/rounded_corner_button"
         android:text="Confirm"
         android:textAllCaps="false"
@@ -94,22 +78,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/typology"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxDog"
+        app:layout_constraintVertical_bias="0.152"
         tools:ignore="HardcodedText" />
 
-    <ImageView
-        android:layout_height="70sp"
+    <CheckBox
+        android:id="@+id/checkBoxDog"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:buttonTint="#FFFFFF"
+        android:text="Dog"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.236"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/race" />
+
+    <CheckBox
+        android:id="@+id/checkBoxCat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:buttonTint="@color/white"
+        android:text="Cat"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/race" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pet_button"
-        app:layout_constraintVertical_bias="0.047"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/signin_user_icon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
