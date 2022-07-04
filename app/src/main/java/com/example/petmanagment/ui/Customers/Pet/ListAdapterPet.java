@@ -10,12 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.petmanagment.HomeActivity;
 import com.example.petmanagment.R;
-import com.example.petmanagment.ui.Customers.Customer;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -59,9 +57,8 @@ public class ListAdapterPet extends RecyclerView.Adapter<ListAdapterPet.MyViewHo
             super(itemView);
             tvPet = itemView.findViewById(R.id.tvpetname);
             itemView.setOnClickListener(view -> {
-                //  System.out.println(tvNameSurname.getText());
-                Intent clientWindow = new Intent(view.getContext(), PetActivity.class);
-                clientWindow.putExtra("NameLastName", tvPet.getText());
+                Intent clientWindow = new Intent(view.getContext(), FinalPetActivity.class);
+                clientWindow.putExtra("Name", tvPet.getText());
                 view.getContext().startActivity(clientWindow);
             });
 

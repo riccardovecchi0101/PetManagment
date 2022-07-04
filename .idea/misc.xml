@@ -60,6 +60,7 @@
         <entry key="app/src/main/res/drawable/user_icon.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/user_icon_orange.xml" value="0.167" />
         <entry key="app/src/main/res/layout-v23/fragment_customers.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_final_pet.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.380947340056052" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20312042236328126" />
@@ -67,7 +68,7 @@
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/content_home.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/customers_list_adapter.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/customers_list_adapter.xml" value="0.25967254638671877" />
         <entry key="app/src/main/res/layout/fragment_customers.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.21822916666666667" />
@@ -89,7 +90,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

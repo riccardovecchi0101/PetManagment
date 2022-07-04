@@ -17,6 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetManagment">
         <activity
+            android:name=".ui.Customers.Pet.FinalPetActivity"
+            android:exported="true"
+            android:label="@string/title_activity_final_pet"
+            android:theme="@style/Theme.PetManagment.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.Customers.Pet.PetActivity"
             android:exported="false" />
 

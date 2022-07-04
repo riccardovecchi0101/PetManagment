@@ -63,7 +63,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
             tvNameSurname = itemView.findViewById(R.id.tvnamesurname);
             tvPhone = itemView.findViewById(R.id.tvphone);
             itemView.setOnClickListener(view -> {
-            //  System.out.println(tvNameSurname.getText());
                 Intent clientWindow = new Intent(view.getContext(), PetActivity.class);
                 clientWindow.putExtra("ID", tvPhone.getText());
                 clientWindow.putExtra("NameLastName", tvNameSurname.getText());
