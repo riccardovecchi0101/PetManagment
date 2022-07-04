@@ -13,11 +13,15 @@ import androidx.navigation.Navigation;
 
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentHomeBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 public class HomeFragment extends Fragment {
@@ -64,12 +68,25 @@ public class HomeFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(user.getEmail()).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    totalCustomers=0;
                     for (QueryDocumentSnapshot ignored : queryDocumentSnapshots) {
                         totalCustomers++;
+                        db.collection(user.getEmail()).document(ignored.getId()).collection(ignored.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                for (QueryDocumentSnapshot ignore2: queryDocumentSnapshots){
+                                    System.out.println(ignore2.getId());
+                                    totalPets++;
+                                }
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                updateValues(totalCustomers,totalPets);
+                            }
+                        });
                     }
-                    updateValues(totalCustomers, totalPets);
                 });
+
 
 
         //questa riga sotto potrebbe essere eliminata, cosi come riga 31 ma se eliminate da problemi
@@ -82,6 +99,8 @@ public class HomeFragment extends Fragment {
         text_pets.setText(String.valueOf(totalPets));
         text_customers.setText(String.valueOf(totalCustomers));
 
+
+
         //setto il valore degli anelli
         customersProgressBar.setProgressWithAnimation(totalCustomers, 2000L);
         petsProgressBar.setProgressWithAnimation(totalPets, 2000L);
@@ -91,7 +110,7 @@ public class HomeFragment extends Fragment {
             customermax *= 2;
             customersProgressBar.setProgressMax(customermax);
         }
-        if (totalPets > petmax) {
+        while (totalPets > petmax) {
             petmax *= 2;
             petsProgressBar.setProgressMax(petmax);
         }
