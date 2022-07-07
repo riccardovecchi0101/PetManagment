@@ -3,7 +3,6 @@ package com.example.petmanagment.ui.Customers.Pet;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -52,7 +51,6 @@ public class PetActivity extends AppCompatActivity {
     StorageReference storageRef;
     RecyclerView recyclerView;
     ArrayList<String> pets = new ArrayList<>();
-    ArrayList<String> flag = new ArrayList<>();
     String deletedPet = null;
     String modifiedPet = null;
     ListAdapterPet listAdapterPet;
@@ -68,15 +66,14 @@ public class PetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet);
-        TextView customerName = (TextView) findViewById(R.id.customer_name);
+        TextView customerName = findViewById(R.id.customer_name);
         ImageView icon = (ImageView) findViewById(R.id.imageView3);
         TextView infoLink = (TextView) findViewById(R.id.customer_info);
         TextView custoInfo = (TextView) findViewById(R.id.custoInfo);
         custoInfo.setCursorVisible(false);
-        custoInfo.setTextSize(10);
+        custoInfo.setTextSize(14);
 
         custoInfo.setVisibility(View.INVISIBLE);
-
 
         recyclerView = findViewById(R.id.recyclerView);
         add_pet = findViewById(R.id.addpet);
@@ -85,6 +82,9 @@ public class PetActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         info = extras.getString("NameLastName");
         customerName.setText(info);
+
+        Intent intent = new Intent(PetActivity.this, FinalPetActivity.class);
+        intent.putExtra("NameLastName",info);
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -105,7 +105,7 @@ public class PetActivity extends AppCompatActivity {
                 phone = documentSnapshot.getString("phone");
                 email = documentSnapshot.getString("email");
 
-                content = String.format("name:%s\nlastName:%s\nphone:%s\nemail:%s\n", name, lastName, phone, email);
+                content = String.format("Name: %s\nSurname: %s\nPhone: %s\nEmail: %s\n", name, lastName, phone, email);
                 custoInfo.setText(content);
 
                 assert id != null;
@@ -130,7 +130,7 @@ public class PetActivity extends AppCompatActivity {
         });
 
         getPets(pets);
-        listAdapterPet = new ListAdapterPet(pets);
+        listAdapterPet = new ListAdapterPet(pets, info);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(listAdapterPet);
 
@@ -208,41 +208,6 @@ public class PetActivity extends AppCompatActivity {
         }
     };
 
-
-    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-        int position = viewHolder.getAdapterPosition();
-        if (direction == ItemTouchHelper.LEFT) {
-            deletedPet = pets.get(position);
-
-            pets.remove(position);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-            //la snackbar serve per tornare indietro in caso di errore nella cancellazione
-            Snackbar snackbar = Snackbar.make(recyclerView, "Customer " + deletedPet + " deleted", Snackbar.LENGTH_LONG).addCallback(new Snackbar.Callback());
-            snackbar.addCallback(new Snackbar.Callback() {
-
-                        @Override
-                        public void onDismissed(Snackbar snackbar, int event) {
-                            if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                                deletePets(deletedPet);
-                            }
-                        }
-                    }).setAction("Undo", view -> {
-                        pets.add(position, deletedPet);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-                    }).setActionTextColor(getResources().getColor(R.color.orange))
-                    .setTextColor(getResources().getColor(R.color.black))
-                    .setBackgroundTint(getResources().getColor(R.color.white))
-                    .show();
-        } else {
-            modifiedPet = pets.get(position);
-            elaboratePet("modify", position);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -354,7 +319,7 @@ public class PetActivity extends AppCompatActivity {
                                             .update("typology", typology);
 
                                 pets.remove(petname);
-                                listAdapterPet = new ListAdapterPet(pets);
+                                listAdapterPet = new ListAdapterPet(pets, info);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                                 recyclerView.setAdapter(listAdapterPet);
 

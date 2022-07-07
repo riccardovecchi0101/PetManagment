@@ -22,9 +22,6 @@
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/customers_list_adapter.xml" value="0.25317028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_customers.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/item.xml" value="0.536" />
-        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/pets_list_adapter.xml" value="0.1625" />
-        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/popdate.xml" value="0.4" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/popwindow.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/smallpopup.xml" value="0.1484375" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/activity_registration.xml" value="0.20833333333333334" />
@@ -42,6 +39,8 @@
         <entry key="app/src/main/res/drawable/background2.xml" value="0.17135416666666667" />
         <entry key="app/src/main/res/drawable/camera_icon_white.xml" value="0.2245" />
         <entry key="app/src/main/res/drawable/delete_icon.xml" value="0.1705" />
+        <entry key="app/src/main/res/drawable/dog_icon_popup.xml" value="0.111" />
+        <entry key="app/src/main/res/drawable/dog_icon_popup_orange.xml" value="0.111" />
         <entry key="app/src/main/res/drawable/home_icon.xml" value="0.2405" />
         <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_assignment_ind_24.xml" value="0.3260416666666667" />
@@ -63,8 +62,8 @@
         <entry key="app/src/main/res/drawable/user_icon.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/user_icon_orange.xml" value="0.167" />
         <entry key="app/src/main/res/layout-v23/fragment_customers.xml" value="0.4036458333333333" />
-        <entry key="app/src/main/res/layout/activity_final_pet.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.380947340056052" />
+        <entry key="app/src/main/res/layout/activity_final_pet.xml" value="0.2665036674816626" />
+        <entry key="app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.18891395382558326" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20312042236328126" />
         <entry key="app/src/main/res/layout/activity_pet.xml" value="0.1573529052734375" />
@@ -78,6 +77,8 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/pets_list_adapter.xml" value="0.1937244201909959" />
+        <entry key="app/src/main/res/layout/popdate.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/popwindow.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/popwindow_pet.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
@@ -90,7 +91,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
@@ -99,7 +100,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.24282560706401765" />
+        <option name="scale" value="0.19610507246376813" />
       </ProjectState>
     </option>
   </component>
