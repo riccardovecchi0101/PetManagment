@@ -123,11 +123,19 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:src="@drawable/user_icon"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/AddMeeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Date"
+        tools:layout_editor_absoluteX="264dp"
+        tools:layout_editor_absoluteY="356dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

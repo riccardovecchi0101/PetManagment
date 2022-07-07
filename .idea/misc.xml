@@ -22,6 +22,9 @@
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/customers_list_adapter.xml" value="0.25317028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_customers.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/item.xml" value="0.536" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/pets_list_adapter.xml" value="0.1625" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/popdate.xml" value="0.4" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/popwindow.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/smallpopup.xml" value="0.1484375" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/activity_registration.xml" value="0.20833333333333334" />
@@ -87,7 +90,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

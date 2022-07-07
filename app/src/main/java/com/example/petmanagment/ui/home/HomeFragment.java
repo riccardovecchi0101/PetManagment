@@ -1,9 +1,12 @@
 package com.example.petmanagment.ui.home;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +25,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
@@ -31,6 +37,12 @@ public class HomeFragment extends Fragment {
     TextView text_pets;
     CircularProgressBar customersProgressBar;
     CircularProgressBar petsProgressBar;
+   // Spinner cSpinner;
+    FirebaseUser user;
+    FirebaseFirestore db;
+
+    private AlertDialog dialog;
+
 
 
     float customermax = 10;
@@ -50,9 +62,14 @@ public class HomeFragment extends Fragment {
 
         //la text_home non viene usata ma se tolta da problemi con la classe HomeViewModel, text_customers e text_pets servono per controllare i rispettivi contatori
         final TextView text_home = root.findViewById(R.id.text_home);
+        FloatingActionButton dateButton = (FloatingActionButton) root.findViewById(R.id.floatingActionButton);
+
 
         text_customers = root.findViewById(R.id.tv_clients_number);
         text_pets = root.findViewById(R.id.tv_pets_number);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        db = FirebaseFirestore.getInstance();
 
         //le due progressbar servono per controllare il progresso delle due barre
         customersProgressBar = root.findViewById(R.id.progress_circular);
@@ -87,6 +104,18 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
+        dateButton.setOnClickListener(view -> {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+            final View popup = getLayoutInflater().inflate(R.layout.popdate, null);
+            final Spinner cSpinner = (Spinner) popup.findViewById(R.id.customerSpinner);
+            assert cSpinner != null;
+            dialogBuilder.setView(popup);
+            dialog = dialogBuilder.create();
+            buildSpinner(cSpinner);
+            dialog.show();
+
+        });
+
 
 
         //questa riga sotto potrebbe essere eliminata, cosi come riga 31 ma se eliminate da problemi
@@ -120,5 +149,18 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void buildSpinner(Spinner spinner){
+        ArrayList <String> customers = new ArrayList<String>();
+        db.collection(user.getEmail()).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(QueryDocumentSnapshot ignore : queryDocumentSnapshots){
+                customers.add(ignore.getId());
+            }
+        });
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (getActivity(), android.R.layout.simple_spinner_dropdown_item, customers);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 }
