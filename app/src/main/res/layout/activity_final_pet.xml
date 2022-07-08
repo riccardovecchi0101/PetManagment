@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/background5"
     tools:context=".ui.Customers.Pet.PetActivity">
 
     <Button
@@ -14,8 +14,9 @@
         android:background="@drawable/rounded_corner_button"
         android:backgroundTint="@color/light_blue"
         app:backgroundTint="@color/light_blue"
+        android:drawableStart="@drawable/pdf_icon"
         android:padding="18sp"
-        android:text="Generate Pet's data"
+        android:text="Generate Pet's PDF"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -30,10 +31,9 @@
         android:id="@+id/pet_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner_button"
         android:padding="18sp"
         android:text="PetName"
-        android:textColor="@color/orange"
+        android:textColor="@color/light_blue"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,15 +48,16 @@
         android:layout_height="wrap_content"
         android:padding="18sp"
         android:text="Pet Info"
+        android:textStyle="bold"
         android:textColor="@color/light_blue"
         android:textSize="18sp"
         app:flow_verticalAlign="top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.006"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.441" />
+        app:layout_constraintVertical_bias="0.538" />
 
     <ImageView
         android:id="@+id/impet"
@@ -91,21 +92,23 @@
         android:id="@+id/petdata"
         android:layout_width="313dp"
         android:layout_height="126dp"
-        android:backgroundTint="@color/white"
-        android:padding="18sp"
+        android:background="@drawable/rounded_outline"
+        android:backgroundTint="#00FFFFFF"
         android:clickable="false"
         android:ems="10"
         android:focusable="false"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:textColor="@color/orange"
+        android:padding="18sp"
+        android:textColor="@color/light_blue"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintVertical_bias="0.652"
+        tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
