@@ -1,10 +1,12 @@
 package com.example.petmanagment.ui.home;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,11 +39,8 @@ public class HomeFragment extends Fragment {
     TextView text_pets;
     CircularProgressBar customersProgressBar;
     CircularProgressBar petsProgressBar;
-   // Spinner cSpinner;
     FirebaseUser user;
     FirebaseFirestore db;
-
-    private AlertDialog dialog;
 
 
 
@@ -105,15 +104,8 @@ public class HomeFragment extends Fragment {
                 });
 
         dateButton.setOnClickListener(view -> {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-            final View popup = getLayoutInflater().inflate(R.layout.popdate, null);
-            final Spinner cSpinner = (Spinner) popup.findViewById(R.id.customerSpinner);
-            assert cSpinner != null;
-            dialogBuilder.setView(popup);
-            dialog = dialogBuilder.create();
-            buildSpinner(cSpinner);
-            dialog.show();
-
+                Intent i = new Intent(getContext(), DateActivity.class);
+                startActivity(i);
         });
 
 

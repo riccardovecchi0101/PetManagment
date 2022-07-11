@@ -17,8 +17,12 @@
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/drawable/lock_icon.xml" value="0.122" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/drawable/logout_icon.xml" value="0.122" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout-v31/activity_pet.xml" value="0.16145833333333334" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/activity_date.xml" value="0.4" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.1625" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/activity_main.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/activity_pet.xml" value="0.2" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/app_bar_home.xml" value="0.16197916666666667" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/content_home.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/customers_list_adapter.xml" value="0.25317028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_customers.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/fragment_home.xml" value="0.25" />
@@ -27,6 +31,7 @@
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/popdate.xml" value="0.4" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/popwindow.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/smallpopup.xml" value="0.1484375" />
+        <entry key="..\:/Users/utente/StudioProjects/PetManagment_finale/app/src/main/res/layout/spinner_item.xml" value="0.1609375" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/activity_registration.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/app_bar_home.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/utente/StudioProjects/PetManagmentt/app/src/main/res/layout/content_home.xml" value="0.1" />
