@@ -245,7 +245,7 @@ public class CustomersFragment extends Fragment {
         db.collection(user.getEmail().toString()).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        if (!c.contains(document.getId()))
+                        if (!c.contains(document.getId()) && !document.getId().contains("Date"))
                             c.add(document.getId());
                         listAdapter.notifyDataSetChanged();
                     }

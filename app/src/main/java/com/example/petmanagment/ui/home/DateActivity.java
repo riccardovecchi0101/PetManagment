@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,8 +55,10 @@ public class DateActivity extends AppCompatActivity{
     private CalendarView calendar;
     private String selectedDate;
     private TextView sDate;
+    private String hour;
     final int callbackId = 42;
     GregorianCalendar storeDate;
+    TextView myDates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,19 +76,26 @@ public class DateActivity extends AppCompatActivity{
         sDate = (TextView)  findViewById(R.id.selectedDate);
         sDate.setText(selectedDate);
         Button confirmBtn = (Button) findViewById(R.id.confirmBtn);
+        myDates = (TextView) findViewById(R.id.meetingView);
 
         checkPermission(callbackId, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR);
 
 
         db.collection(user.getEmail()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(QueryDocumentSnapshot q: queryDocumentSnapshots){
-                customers.add(q.getId());
+                if(!q.getId().contains("Date"))
+                    customers.add(q.getId());
             }
         }).addOnCompleteListener(task -> {
             final ArrayAdapter<String> content = new ArrayAdapter<String>
                     (getApplicationContext(), R.layout.spinner_item, customers);
             content.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             cSpinner.setAdapter(content);
+        });
+
+        myDates.setOnClickListener(view -> {
+            Intent myDatesNavigator = new Intent(this, MyDatesActivity.class);
+            startActivity(myDatesNavigator);
         });
 
        cSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -106,7 +117,6 @@ public class DateActivity extends AppCompatActivity{
 
            @Override
            public void onNothingSelected(AdapterView<?> adapterView) {
-
            }
        });
 
@@ -132,16 +142,14 @@ public class DateActivity extends AppCompatActivity{
        });
 
        confirmBtn.setOnClickListener(view -> {
-           ContentResolver cr = this.getContentResolver();
-           ContentValues cv = new ContentValues();
-           cv.put(CalendarContract.Events.CALENDAR_ID,1);
-           cv.put(CalendarContract.Events.TITLE, String.format("Date with %s, visiting %s", selected, selectedP));
-           cv.put(CalendarContract.Events.DESCRIPTION, String.format("Normal date"));
-           cv.put(CalendarContract.Events.DTSTART, storeDate.getTimeInMillis());
-           cv.put(CalendarContract.Events.DTEND, storeDate.getTimeInMillis()+(60*60*1000));
-           cv.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance().getTimeZone().getID());
-           Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI,cv);
-           Toast.makeText(this, "Event succesfully added", Toast.LENGTH_LONG).show();
+           EditText time = (EditText)findViewById(R.id.editTextTime);
+           Meeting m = new Meeting(selected, selectedP, sDate.getText().toString(), time.getText().toString());
+           db.collection(user.getEmail()).document("Date"+ selected+selectedP).set(m).addOnSuccessListener(new OnSuccessListener<Void>() {
+               @Override
+               public void onSuccess(Void unused) {
+                   Toast.makeText(getApplicationContext(), "Date addedd succesfully", Toast.LENGTH_LONG).show();
+               }
+           });
        });
 
     }
