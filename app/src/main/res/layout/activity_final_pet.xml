@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_button"
-        android:backgroundTint="@color/light_blue"
         app:backgroundTint="@color/light_blue"
         android:drawableStart="@drawable/pdf_icon"
         android:padding="18sp"

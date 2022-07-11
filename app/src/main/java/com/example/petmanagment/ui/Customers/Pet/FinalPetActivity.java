@@ -1,8 +1,16 @@
 package com.example.petmanagment.ui.Customers.Pet;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +33,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class FinalPetActivity extends AppCompatActivity {
 
     StorageReference storageRef;
@@ -34,6 +46,10 @@ public class FinalPetActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseFirestore db;
     FirebaseStorage storage;
+    String name, race, typology;
+
+    Bitmap bmp, scaledbmp;
+    int pageWidth = 1200;
 
     ImageView imPet;
 
@@ -41,12 +57,14 @@ public class FinalPetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_pet);
-        imPet=findViewById(R.id.impet);
-        ImageView imCam=findViewById(R.id.imcam);
-        TextView petName=findViewById(R.id.pet_name);
-        TextView petInfoLink=findViewById(R.id.pet_info);
-        EditText petInfo=findViewById(R.id.petdata);
-        Button generatePDFbtn=findViewById(R.id.pet_PDF_btn);
+        imPet = findViewById(R.id.impet);
+        ImageView imCam = findViewById(R.id.imcam);
+        TextView petName = findViewById(R.id.pet_name);
+        TextView petInfoLink = findViewById(R.id.pet_info);
+        EditText petInfo = findViewById(R.id.petdata);
+        Button generatePDFbtn = findViewById(R.id.pet_PDF_btn);
+        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.pdf_dog_icon);
+        scaledbmp = Bitmap.createScaledBitmap(bmp, 1200, 518, false);
 
         Bundle extrasCustomer = getIntent().getExtras();
         infocustomer = extrasCustomer.getString("CustomerName");
@@ -68,7 +86,6 @@ public class FinalPetActivity extends AppCompatActivity {
         db.collection(user.getEmail()).document(infocustomer).collection(infocustomer).document(info).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String name, race, typology;
                 String content;
 
                 id = documentSnapshot.getString("uuid");
@@ -97,18 +114,54 @@ public class FinalPetActivity extends AppCompatActivity {
             imCam.setVisibility(View.INVISIBLE);
         });
 
-        petInfoLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (petInfo.getVisibility() == View.VISIBLE)
-                    petInfo.setVisibility(View.INVISIBLE);
-                else
-                    petInfo.setVisibility(View.VISIBLE);
-            }
+        petInfoLink.setOnClickListener(view -> {
+            if (petInfo.getVisibility() == View.VISIBLE)
+                petInfo.setVisibility(View.INVISIBLE);
+            else
+                petInfo.setVisibility(View.VISIBLE);
+        });
+
+        generatePDFbtn.setOnClickListener(view -> {
+            createPDF();
         });
 
 
     }
+
+    private void createPDF() {
+        PdfDocument myPdfDocument = new PdfDocument();
+        Paint myPaint = new Paint();
+        Paint titlePaint = new Paint();
+        PdfDocument.PageInfo myPageInfo1 = new PdfDocument.PageInfo.Builder(1200, 2010, 1).create();
+        PdfDocument.Page myPage1 = myPdfDocument.startPage(myPageInfo1);
+        Canvas canvas = myPage1.getCanvas();
+
+        canvas.drawBitmap(scaledbmp, 0, 0, myPaint);
+
+        titlePaint.setTextAlign(Paint.Align.RIGHT);
+        titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        titlePaint.setTextSize(70);
+        titlePaint.setColor(Color.rgb(0, 0, 0));
+        canvas.drawText("Pet Management", pageWidth / 2, 270, titlePaint);
+        myPaint.setTextAlign(Paint.Align.LEFT);
+        myPaint.setTextSize(35);
+        myPaint.setColor(Color.BLACK);
+        canvas.drawText("Pet's name: " + name.toString(), 20, 590, myPaint);
+        canvas.drawText("Pet: " + typology + " " + race, 20, 640, myPaint);
+
+
+        myPdfDocument.finishPage(myPage1);
+
+        File file = new File(Environment.getExternalStorageDirectory(), "ciao.pdf");
+        try {
+            myPdfDocument.writeTo(new FileOutputStream(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        myPdfDocument.close();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -121,7 +174,7 @@ public class FinalPetActivity extends AppCompatActivity {
         }
     }
 }
-/* TODO potrebbe andare beneper il pdf
+/* TODO potrebbe andare bene per il pdf
 
 
 import android.content.pm.PackageManager;
