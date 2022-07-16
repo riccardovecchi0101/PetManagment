@@ -123,6 +123,7 @@ public class FinalPetActivity extends AppCompatActivity {
 
         generatePDFbtn.setOnClickListener(view -> {
             createPDF();
+            Toast.makeText(getApplicationContext(),"PDF created",Toast.LENGTH_LONG).show();
         });
 
 
@@ -152,7 +153,7 @@ public class FinalPetActivity extends AppCompatActivity {
 
         myPdfDocument.finishPage(myPage1);
 
-        File file = new File(Environment.getExternalStorageDirectory(), "ciao.pdf");
+        File file = new File(Environment.getExternalStorageDirectory(), "/ciao.pdf");
         try {
             myPdfDocument.writeTo(new FileOutputStream(file));
         } catch (IOException e) {

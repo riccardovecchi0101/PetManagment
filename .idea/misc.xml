@@ -69,10 +69,12 @@
         <entry key="app/src/main/res/drawable/user_icon.xml" value="0.2828125" />
         <entry key="app/src/main/res/drawable/user_icon_orange.xml" value="0.167" />
         <entry key="app/src/main/res/layout-v23/fragment_customers.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_date.xml" value="0.3591485507246377" />
         <entry key="app/src/main/res/layout/activity_final_pet.xml" value="0.2665036674816626" />
         <entry key="app/src/main/res/layout/activity_forgot_pwactivity.xml" value="0.18891395382558326" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20312042236328126" />
+        <entry key="app/src/main/res/layout/activity_my_dates.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_pet.xml" value="0.1573529052734375" />
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.21822916666666667" />

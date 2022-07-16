@@ -85,21 +85,24 @@ public class HomeFragment extends Fragment {
         db.collection(user.getEmail()).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot ignored : queryDocumentSnapshots) {
-                        totalCustomers++;
-                        db.collection(user.getEmail()).document(ignored.getId()).collection(ignored.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                for (QueryDocumentSnapshot ignore2: queryDocumentSnapshots){
-                                    System.out.println(ignore2.getId());
-                                    totalPets++;
+                        if(!ignored.getId().contains("Date"))
+                        {
+                            totalCustomers++;
+                            db.collection(user.getEmail()).document(ignored.getId()).collection(ignored.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    for (QueryDocumentSnapshot ignore2: queryDocumentSnapshots){
+                                        System.out.println(ignore2.getId());
+                                        totalPets++;
+                                    }
                                 }
-                            }
-                        }).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                updateValues(totalCustomers,totalPets);
-                            }
-                        });
+                            }).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    updateValues(totalCustomers,totalPets);
+                                }
+                            });
+                        }
                     }
                 });
 
