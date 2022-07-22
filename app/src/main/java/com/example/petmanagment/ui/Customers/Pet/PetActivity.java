@@ -9,9 +9,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +86,7 @@ public class PetActivity extends AppCompatActivity {
         customerName.setText(info);
 
         Intent intent = new Intent(PetActivity.this, FinalPetActivity.class);
-        intent.putExtra("NameLastName",info);
+        intent.putExtra("NameLastName", info);
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -247,7 +249,22 @@ public class PetActivity extends AppCompatActivity {
         typology_dog = (CheckBox) popup.findViewById(R.id.checkBoxDog);
         typology_cat = (CheckBox) popup.findViewById(R.id.checkBoxCat);
         Button confirm = (Button) popup.findViewById(R.id.pet_button);
+        typology_dog.setChecked(true);
+        typology_dog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                typology_cat.setChecked(false);
+                typology_dog.setChecked(true);
+            }
+        });
+        typology_cat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                typology_dog.setChecked(false);
+                typology_cat.setChecked(true);
+            }
 
+        });
         dialogBuilder.setView(popup);
         dialog = dialogBuilder.create();
         dialog.show();
@@ -263,10 +280,13 @@ public class PetActivity extends AppCompatActivity {
                     addNewPet(c);
                     break;
                 case "modify":
-                    if (typology_dog.isChecked())
+                    if (typology_dog.isChecked()) {
                         updatePets(pets.get(eventualPosition), name.getText().toString(), race.getText().toString(), "Dog");
-                    else
+                        typology_cat.setChecked(false);
+                    } else if (typology_cat.isChecked()) {
                         updatePets(pets.get(eventualPosition), name.getText().toString(), race.getText().toString(), "Cat");
+                        typology_dog.setChecked(false);
+                    }
                     if (!name.getText().toString().isEmpty() || !race.getText().toString().isEmpty())
                         pets.set(eventualPosition, String.format("%s", name.getText()));
                     break;
@@ -293,7 +313,7 @@ public class PetActivity extends AppCompatActivity {
                         System.out.println(fileName);
                         db.collection(user.getEmail()).document(info).collection(info).document(fileName).set(documentSnapshot.getData(), SetOptions.merge()).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                Toast.makeText(PetActivity.this, "Customer edited successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(PetActivity.this, "Pet edited successfully", Toast.LENGTH_LONG).show();
                                 if (!fileName.equals(petname))
                                     db.collection(user.getEmail())
                                             .document(info)
@@ -318,11 +338,8 @@ public class PetActivity extends AppCompatActivity {
                                             .document(fileName)
                                             .update("typology", typology);
 
-                                pets.remove(petname);
-                                listAdapterPet = new ListAdapterPet(pets, info);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                recyclerView.setAdapter(listAdapterPet);
-
+                                pets.clear();
+                                getPets(pets);
                             }
                         });
                     }

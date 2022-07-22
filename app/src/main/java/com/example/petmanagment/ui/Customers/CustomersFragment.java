@@ -24,7 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.petmanagment.R;
 import com.example.petmanagment.databinding.FragmentCustomersBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,6 +52,7 @@ public class CustomersFragment extends Fragment {
     private EditText lastname;
     private EditText mobile;
     private EditText email;
+    private String nome, cognome;
     private Button confirm;
     ArrayList<String> customers = new ArrayList<>();
     ArrayList<String> flag = new ArrayList<>();
@@ -98,7 +101,7 @@ public class CustomersFragment extends Fragment {
 
         };
 
-        add_customer.setOnClickListener(view -> elaborateUser("add",-1));
+        add_customer.setOnClickListener(view -> elaborateUser("add", -1));
 
 
         searchCustomer.addTextChangedListener(new TextWatcher() {
@@ -138,16 +141,16 @@ public class CustomersFragment extends Fragment {
         dialog.show();
 
         confirm.setOnClickListener(view -> {
-            switch (operation){
+            switch (operation) {
                 case "add":
                     Customer c = new Customer(firstname.getText().toString(), lastname.getText().toString(), mobile.getText().toString(), email.getText().toString(), UUID.randomUUID().toString());
                     addNewCustomer(c);
-                   // getCustomers(customers);
+                    // getCustomers(customers);
                     break;
                 case "modify":
                     updateCustomers(customers.get(eventualPosition), firstname.getText().toString(), lastname.getText().toString(), mobile.getText().toString(), email.getText().toString());
-                    if(!firstname.getText().toString().isEmpty() || !lastname.getText().toString().isEmpty())
-                     customers.set(eventualPosition, String.format("%s\t%s", firstname.getText(), lastname.getText()));
+                    if (!firstname.getText().toString().isEmpty() || !lastname.getText().toString().isEmpty())
+                        customers.set(eventualPosition, String.format("%s\t%s", firstname.getText(), lastname.getText()));
                     break;
             }
             getCustomers(customers);
@@ -247,6 +250,7 @@ public class CustomersFragment extends Fragment {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         if (!c.contains(document.getId()) && !document.getId().contains("Date"))
                             c.add(document.getId());
+                        System.out.println(customers);
                         listAdapter.notifyDataSetChanged();
                     }
                 });
@@ -257,27 +261,48 @@ public class CustomersFragment extends Fragment {
     }
 
     public void updateCustomers(String customerName, String name, String lastName, String mobile, String email) {
-        if(!name.isEmpty())
+        if (!name.isEmpty()) {
             db.collection(user.getEmail()).document(customerName).update("name", name);
-        if(!lastName.isEmpty())
+            nome = name;
+        } else {
+            db.collection(user.getEmail()).document(customerName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    nome = documentSnapshot.getString("name");
+                }
+            });
+        }
+        if (!lastName.isEmpty()) {
             db.collection(user.getEmail()).document(customerName).update("lastName", lastName);
-        if(!email.isEmpty())
+            cognome = lastName;
+        } else {
+            db.collection(user.getEmail()).document(customerName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    cognome = documentSnapshot.getString("lastName");
+                }
+            });
+        }
+        if (!email.isEmpty())
             db.collection(user.getEmail()).document(customerName).update("email", email);
-        if(!mobile.isEmpty())
+        if (!mobile.isEmpty())
             db.collection(user.getEmail()).document(customerName).update("phone", mobile);
         db.collection(user.getEmail()).document(customerName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 String fileName;
-                if(name.isEmpty() && lastName.isEmpty())
-                    fileName = customerName;
-                else
-                    fileName = name + '\t' + lastName;
+                fileName = nome + '\t' + cognome;
                 db.collection(user.getEmail().toString()).document(fileName).set(documentSnapshot.getData(), SetOptions.merge()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "Customer edited successfully", Toast.LENGTH_LONG).show();
-                        if(!fileName.equals(customerName))
-                            db.collection(user.getEmail()).document(customerName).delete();
+                        if (!fileName.equals(customerName))
+                            db.collection(user.getEmail()).document(customerName).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    customers.clear();
+                                    getCustomers(customers);
+                                }
+                            });
                     }
                 });
             }

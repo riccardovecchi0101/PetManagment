@@ -86,15 +86,6 @@ public class HomeActivity extends AppCompatActivity {
 
                     return true;
 
-                /*case R.id.nav_settings:
-                    replaceFragment(SettingsFragment.class, fragmentManager);
-                    Objects.requireNonNull(getSupportActionBar()).setTitle("Settings");
-                    return true;*/  //decommenta per aggiungere al menu la voce settings e aggiungi al file xml activity_main_drawer il seguente codice
-                /*<item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/setting_icon"
-            android:title="@string/menu_settings" />*/
-
             }
             return true;
         });
@@ -105,14 +96,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         TextView username = (TextView) findViewById(R.id.mailView);
-        ImageView profileImage = findViewById(R.id.ProfileIcon);
         //profileImage.setVisibility(View.INVISIBLE);
-        profileImage.setOnClickListener(view -> {
-            PhotoCreator creator = new PhotoCreator(getApplicationContext());
-            startActivityForResult(creator.dispatchTakePictureIntent(), PhotoCreator.REQUEST_IMAGE_CAPTURE);
-            profileImage.setImageBitmap(puppet);
-
-        });
         if (FirebaseAuth.getInstance().getCurrentUser() != null)
             username.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         else
